@@ -1,0 +1,37 @@
+@import "./variables.scss";
+
+
+@mixin title {
+	color: $--primary-text;
+	font-size: 1.25vw;
+	font-weight: 900;
+	line-height: 130%;
+}
+
+@mixin subtitle {
+	color: $--primary-text;
+	font-size: 0.94vw;
+	font-weight: 900;
+	line-height: 130%;
+}
+
+@mixin main-text {
+	color: $--primary-text;
+	font-size: 0.94vw;
+	font-weight: 400;
+	line-height: 130%;
+}
+
+@mixin small-text {
+	color: $--primary-text;
+	font-size: 0.83vw;
+	font-weight: 400;
+	line-height: 130%;
+}
+
+@mixin table-text {
+	color: $--primary-text;
+	font-size: 0.73vw;
+	font-weight: 400;
+	line-height: 130%;
+}

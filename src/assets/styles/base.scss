@@ -1,0 +1,48 @@
+@import "./variables.scss";
+
+
+*, *::after,
+*::before {
+	border: 0px;
+	margin: 0px;
+	padding: 0px;
+	user-select: none;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}	
+
+*:focus, *:active {
+	outline: none;
+	text-decoration: none;
+}
+
+html, body {
+	background: $--primary-back;
+	font-family: "Manrope", sans-serif;
+	scrollbar-gutter: stable;
+	height: 100%;
+	width: 100%;
+}
+
+a, a:hover {
+	text-decoration: none;
+}
+
+input, button,
+textarea {
+	font-family: inherit;
+}
+
+button {
+	cursor: pointer;
+}
+
+ul li {
+	list-style: none;
+}
+
+#app {
+	height: 100%;
+	width: 100%;
+}
