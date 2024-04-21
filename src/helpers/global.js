@@ -1,0 +1,1 @@
+export const between = (min, max, value) => value >= min && value <= max;

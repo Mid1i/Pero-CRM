@@ -35,3 +35,10 @@
 	font-weight: 400;
 	line-height: 130%;
 }
+
+@mixin secondary-layout {
+	background: $--secondary-back;
+	border-radius: 1.04vw;
+	display: flex;
+	flex-direction: column;
+}

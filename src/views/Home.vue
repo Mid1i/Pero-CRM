@@ -1,7 +1,11 @@
-<script setup></script>
+<script setup>
+	import Widgets from "@/components/general/Widgets.vue";
+</script>
 
 
-<template></template>
+<template>
+	<Widgets/>
+</template>
 
 
 <style scoped lang="scss"></style>

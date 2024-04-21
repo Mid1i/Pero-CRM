@@ -65,7 +65,7 @@
 			<div class="aside-bar__wrapper">
 				<img alt="Логотип Pero" class="aside-bar__logo image" src="@/assets/images/Pero-logo.svg"/>
 			</div>
-			<h1 class="aside-bar__title">Pero</h1>
+			<h2 class="aside-bar__title">Pero</h2>
 			<div class="aside-bar__arrow" @click="onMenuResize">
 				<svg fill="none" height="14" viewBox="0 0 8 14" width="8">
 					<path d="M7 13L1 7L7 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

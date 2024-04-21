@@ -7,42 +7,48 @@ const routes = [
 		path: '/',
 		component: () => import('@/views/Home.vue'),
 		meta: {
-			title: 'PERO CRM | Главная'
+			title: 'PERO CRM | Главная',
+			headerTitle: 'Главная'
 		}
 	},
 	{
 		path: '/users',
 		component: () => import('@/views/Users.vue'),
 		meta: {
-			title: 'PERO CRM | Пользователи'
+			title: 'PERO CRM | Пользователи',
+			headerTitle: 'Пользователи'
 		}
 	},
 	{
 		path: '/orders',
 		component: () => import('@/views/Orders.vue'),
 		meta: {
-			title: 'PERO CRM | Заказы'
+			title: 'PERO CRM | Заказы',
+			headerTitle: 'Заказы'
 		}
 	},
 	{
 		path: '/products',
 		component: () => import('@/views/Products.vue'),
 		meta: {
-			title: 'PERO CRM | Товары'
+			title: 'PERO CRM | Товары',
+			headerTitle: 'Товары'
 		}
 	},
 	{
 		path: '/settings',
 		component: () => import('@/views/Settings.vue'),
 		meta: {
-			title: 'PERO CRM | Настройки'
+			title: 'PERO CRM | Настройки',
+			headerTitle: 'Настройки'
 		}
 	},
 	{
 		path: '/help',
 		component: () => import('@/views/Help.vue'),
 		meta: {
-			title: 'PERO CRM | Помощь'
+			title: 'PERO CRM | Помощь',
+			headerTitle: 'Помощь'
 		}
 	}
 ];
