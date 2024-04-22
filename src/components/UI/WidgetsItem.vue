@@ -33,7 +33,7 @@
 	<section class="content__widgets-item widget">
 		<h3 :class="['widget__title', {loading: !status}]">{{ title }}</h3>
 		<div :class="['widget__row', {loading: !status}]">
-			<span class="widget__amount">{{ amount }}</span>
+			<span class="widget__amount">{{ title === 'Общая выручка' ? `${amount} ₽` : amount }}</span>
 			<span v-if="status" :class="comparisonClasses">{{ compareAmounts() }}</span>
 		</div>
 		<p class="widget__text">По сравнению с предыдущей неделей</p>
@@ -64,8 +64,7 @@
 			color: $--secondary-text;
 
 			&.loading {
-				animation: pulse-bg 2s infinite;
-				border-radius: 0.26vw;
+				@include skeleton;
 				height: 1.1vw;
 				width: 10.4vw;
 			}
@@ -77,8 +76,7 @@
 			gap: 1.04vw;
 
 			&.loading {
-				animation: pulse-bg 2s infinite;
-				border-radius: 0.26vw;
+				@include skeleton;
 				height: 3vw;
 				width: 12vw;
 			}
@@ -124,23 +122,11 @@
 			}
 
 			&.loading {
-				animation: pulse-bg 2s infinite;
-				border-radius: 0.26vw;
+				@include skeleton;
+				position: absolute;
 				height: 3.9vw;
 				width: 3.9vw;
 			}
 		}
 	}
-
-	@keyframes pulse-bg {
-  0% {
-    background-color: $--secondary-text;
-  }
-  50% {
-    background-color: $--tertiary-text;
-  }
-  100% {
-    background-color: $--secondary-text;
-  }
-}
 </style>

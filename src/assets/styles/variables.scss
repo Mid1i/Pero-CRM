@@ -22,3 +22,8 @@ $--teal-blue: #5AC8FA;
 $--orange: #FF9500;
 $--transp-green: rgb(76, 217, 100, .3);
 $--transp-red: rgb(255, 69, 58, .3);
+
+// Skeleton colors
+$--light-skeleton: #353535;
+$--dark-skeleton: #2C2C2C;
+$--linear-skeleton: linear-gradient(to right, $--dark-skeleton 25%, $--light-skeleton 50%, $--dark-skeleton 100%);
