@@ -1,6 +1,6 @@
 <script setup>
 	import TheSidebarItem from "@/components/UI/TheSidebarItem.vue";
-	import { ref } from 'vue';
+	import { ref } from "vue";
 
 	const sidebarItems = {
 		categories: [

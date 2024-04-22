@@ -1,7 +1,7 @@
 <script setup>
 	import { RouterLink, useRouter } from "vue-router";
 	
-	const props = defineProps({
+	defineProps({
 		title: String,
 		iconURL: String,
 		link: String

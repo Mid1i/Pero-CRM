@@ -2,9 +2,10 @@
 	const props = defineProps({
 		title: String,
 		amount: Number,
+		status: Boolean,
 		previousAmount: Number,
 		iconURL: String
-	})
+	});
 
 	const compareAmounts = () => {
 		if (props.previousAmount === 0) {
@@ -19,21 +20,34 @@
 			return `+${difference}%`;
 		}
 	};
+
+	const comparisonClasses = [
+		'widget__comparison', 
+		{increase: props.previousAmount < props.amount}, 
+		{decrease: props.previousAmount > props.amount}
+	];
 </script>
+
 
 <template>
 	<section class="content__widgets-item widget">
-		<h3 class="widget__title">{{ title }}</h3>
-		<div class="widget__row">
+		<h3 :class="['widget__title', {loading: !status}]">{{ title }}</h3>
+		<div :class="['widget__row', {loading: !status}]">
 			<span class="widget__amount">{{ amount }}</span>
-			<span :class="['widget__comparison', {increase: previousAmount < amount}, {decrease: previousAmount > amount}]">{{ compareAmounts() }}</span>
+			<span v-if="status" :class="comparisonClasses">{{ compareAmounts() }}</span>
 		</div>
 		<p class="widget__text">По сравнению с предыдущей неделей</p>
-		<div class="widget__icon">
-			<img :alt="title" class="widget__image image" :src="`/src/assets/images/Widgets/${iconURL}`"/>
+		<div :class="['widget__icon', {loading: !status}, {bigger: iconURL !== 'visitors.svg'}]">
+			<img 
+				v-if="status" 
+				:alt="title" 
+				class="widget__image image" 
+				:src="`/src/assets/images/Widgets/${iconURL}`"
+			/>
 		</div>
 	</section>
 </template>
+
 
 <style scoped lang="scss">
 	@import "@/assets/styles/variables.scss";
@@ -48,12 +62,26 @@
 		&__title {
 			@include subtitle;
 			color: $--secondary-text;
+
+			&.loading {
+				animation: pulse-bg 2s infinite;
+				border-radius: 0.26vw;
+				height: 1.1vw;
+				width: 10.4vw;
+			}
 		}
 
 		&__row {
 			align-items: center;
 			display: flex;
 			gap: 1.04vw;
+
+			&.loading {
+				animation: pulse-bg 2s infinite;
+				border-radius: 0.26vw;
+				height: 3vw;
+				width: 12vw;
+			}
 		}
 
 		&__amount {
@@ -90,6 +118,29 @@
 			right: 2.6vw;
 			height: 3.9vw;
 			width: 2.6vw;
+
+			&.bigger {
+				width: 3.6vw;
+			}
+
+			&.loading {
+				animation: pulse-bg 2s infinite;
+				border-radius: 0.26vw;
+				height: 3.9vw;
+				width: 3.9vw;
+			}
 		}
 	}
+
+	@keyframes pulse-bg {
+  0% {
+    background-color: $--secondary-text;
+  }
+  50% {
+    background-color: $--tertiary-text;
+  }
+  100% {
+    background-color: $--secondary-text;
+  }
+}
 </style>
