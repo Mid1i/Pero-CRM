@@ -1,38 +1,36 @@
 <script setup>
-	import { RouterView } from 'vue-router';
-	import TheSidebar from '@/components/general/TheSidebar.vue';
-	import TheHeader from '@/components/general/TheHeader.vue';
+import TheHeader from "@/components/TheHeader.vue"
+import TheSidebar from "@/components/TheSidebar.vue"
+import { RouterView } from "vue-router"
 </script>
 
-
 <template>
-	<TheSidebar/>
+	<TheSidebar />
 	<div class="content">
-		<TheHeader/>
-		<RouterView/>
+		<TheHeader />
+		<RouterView />
 	</div>
 </template>
 
-
 <style lang="scss">
-	@import "@/assets/styles/base.scss";
-	@import "@/assets/styles/variables.scss";
+@import "@/assets/styles/base.scss";
+@import "@/assets/styles/variables.scss";
 
-	#app {
-		align-items: stretch;	
-		display: flex;
-	}
+#app {
+	align-items: stretch;
+	display: flex;
+}
 
-	.content {
-		display: flex;
-		flex: 1 0 auto;
-		flex-direction: column;
-		padding: 20px 40px 40px;
-	}
+.content {
+	display: flex;
+	flex: 1 0 auto;
+	flex-direction: column;
+	padding: 20px 40px 40px;
+}
 
-	.image {
-		pointer-events: none;
-		height: 100%;
-		width: 100%;
-	}
+.image {
+	pointer-events: none;
+	height: 100%;
+	width: 100%;
+}
 </style>
