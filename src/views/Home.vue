@@ -1,6 +1,7 @@
 <script setup>
 	import { onMounted, reactive, ref, nextTick } from "vue";
 	import { getWidgetsData } from "@/api/WidgetsAPI.js";
+	import { priceFormatter } from "@/helpers/global.js";
 	import Widgets from "@/components/Widgets.vue";
 	import { ordersURL, usersURL } from "@/api";
 
@@ -13,21 +14,29 @@
 		Object.assign(orders, await getWidgetsData(ordersURL, "date_of_creating"));
 	});
 
-	import { Chart } from 'chart.js/auto';
+	import { Chart } from "chart.js/auto";
 
 	nextTick(() => {
-		new Chart(canvasRef.value, {
+		const topCanvasPoint = canvasRef.value.getBoundingClientRect().top;
+		let gradient = canvasRef.value.getContext('2d').createLinearGradient(0, 0, 0, topCanvasPoint);
+		gradient.addColorStop(0, 'rgb(10, 132, 255, .5)');
+		gradient.addColorStop(0.5, 'rgb(15, 66, 118, .5)');
+		gradient.addColorStop(1, 'transparent');
+
+		new Chart(canvasRef.value.getContext('2d'), {
 			type: 'line',
 			data: {
 				labels: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
 				datasets: [{
 					label: 'Продажи',
-					data: [10, 15, 30, 40, 20, 70, 20],
+					data: [23499, 46898, 64192, 36599, 25499, 0, 22499],
 					borderJoinStyle: 'round',
-					backgroundColor: '#0A84FF',
+					backgroundColor: gradient,
 					borderColor: '#0A84FF',
-					pointRadius: 0,
-					borderWidth: 1
+					borderWidth: 2,
+					fill: true,
+					pointBackgroundColor: 'rgb(10, 132, 255, .6)',
+					pointRadius: 6
 				}]
 			},
 			options: {
@@ -44,7 +53,38 @@
 				},
 				scales: {
 					y: {
-						beginAtZero: true
+						beginAtZero: true,
+						border: {
+							display: false,
+							dash: [15, 10]
+						},
+						ticks: {
+							color: 'rgb(235, 235, 245, .6)',
+							font: {
+								size: 14
+							},
+							callback: value => priceFormatter(value)
+						},
+						grid: {
+							color: 'rgb(235, 235, 245, .1)',
+							tickLength: 15,
+							tickWidth: 0
+						}
+					},
+					x: {
+						ticks: {
+							color: 'rgb(235, 235, 245, .6)',
+							font: {
+								size: 14
+							}
+						},
+						border: {
+							display: true,
+							color: '#2C2C2E'
+						},
+						grid: {
+							display: false
+						}
 					}
 				},
 				elements: {
@@ -58,6 +98,7 @@
 	
 </script>
 
+
 <template>
 	<Widgets :users="users" :orders="orders" />
 	<div class="content__charts">
@@ -69,6 +110,7 @@
 		</div>
 	</div>
 </template>
+
 
 <style scoped lang="scss">
 	@import "@/assets/styles/variables.scss";
