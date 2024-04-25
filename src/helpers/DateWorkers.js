@@ -1,6 +1,3 @@
-export const onFormatDate = date => String(date).padStart(2, '0');
-
-
 export const getCurrentDate = () => new Date();
 
 
@@ -17,3 +14,6 @@ export const getDateDifference = (date) => {
 
 	return Number(currentDate.getDate() - formatDate.getDate());
 }
+
+
+export const getWeekDate = (date, index) => new Date(date - index * 24 * 60 * 60 * 1000);
