@@ -1,5 +1,6 @@
 <script setup>
 	import { onMounted, reactive, computed } from "vue";
+	import DailyUsersStatistics from "@/components/DailyUsersStatistics.vue";
 	import DailyStatistics from "@/components/DailyStatistics.vue";
 	import { getWidgetsData } from "@/api/WidgetsAPI.js";
 	import Widgets from "@/components/Widgets.vue";
@@ -19,6 +20,7 @@
 	<Widgets :users="users" :orders="orders" />
 	<div class="content__charts">
 		<DailyStatistics :orders="orders"/>
+		<DailyUsersStatistics :users="users"/>
 	</div>
 </template>
 
@@ -27,6 +29,7 @@
 	.content__charts {
 		display: flex;
 		gap: 2.6vw;
+		justify-content: space-between;
 		margin-bottom: 2.6vw;
 	}
 </style>

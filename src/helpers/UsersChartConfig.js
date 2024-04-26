@@ -1,8 +1,8 @@
-import { onFormatPrice, onFormatUserDate } from "@/helpers/Formatters.js";
-import { addWordEnding } from "@/helpers/Global.js";
+import { onFormatUserDate } from "@/helpers/Formatters.js";
+import { addWordEndingPlural } from "@/helpers/Global.js";
 
 
-export const config = (revenue, ordersAmount, weekDates, weekDays, gradient) => {
+export const config = (users, previousWeekUsers, weekDates, previousWeekDates, weekDays) => {
 	const fontSettings = {
 		size: 14,
 		weight: 'normal',
@@ -10,22 +10,26 @@ export const config = (revenue, ordersAmount, weekDates, weekDays, gradient) => 
 
 
 	return {
-		type: "line",
+		type: "bar",
 		data: {
 			labels: weekDays,
 			datasets: [
 				{
-					backgroundColor: gradient,
-					borderColor: "rgb(10, 132, 255, 1)",
-					borderJoinStyle: "round",
-					borderWidth: 2,
-					data: revenue,
-					fill: true,
-					pointBackgroundColor: "rgb(10, 132, 255, .6)",
-					pointHitRadius: 20,
-					pointRadius: 6,
-					tension: 0.3,
+					barPercentage: 0.9,
+					backgroundColor: "rgb(10, 132, 255, 1)",
+					borderRadius: 5,
+					borderWidth: 0,
+					data: users,
+					minBarLength: 5
 				},
+				{
+					barPercentage: 0.9,
+					backgroundColor: "rgb(23, 60, 97)",
+					borderRadius: 5,
+					borderWidth: 0,
+					data: previousWeekUsers,
+					minBarLength: 5
+				}
 			],
 		},
 		options: {
@@ -46,9 +50,16 @@ export const config = (revenue, ordersAmount, weekDates, weekDays, gradient) => 
 					},
 					bodyAlign: 'center',
 					callbacks: {
-						title: context => onFormatUserDate(weekDates[context[0].dataIndex]),
-						label: context => onFormatPrice(context.formattedValue),
-						footer: context => `${ordersAmount[context[0].dataIndex]} ${addWordEnding('заказ', ordersAmount[context[0].dataIndex])}`
+						title: (context) => {
+							const data = {
+								0: onFormatUserDate(weekDates[context[0].dataIndex]),
+								1: onFormatUserDate(previousWeekDates[context[0].dataIndex])
+							};
+							
+							return data[context[0].datasetIndex];
+						},
+						label: (context) => `${context.formattedValue} ${addWordEndingPlural('пользователь', context.formattedValue)}`,
+						footer: () => 'зарегистрировались',
 					},
 					padding: {
 						y: 10,
@@ -77,15 +88,9 @@ export const config = (revenue, ordersAmount, weekDates, weekDays, gradient) => 
 						font: {
 							size: 14,
 						},
-						callback: (value, index) => {
-							if (Number(String(Math.max(...revenue))[0]) % 2 === 1) {
-								if (index % 2 === 0) {
-									return onFormatPrice(value);
-								}
-							} else {
-								if (index % 2 === 1) {
-									return onFormatPrice(value);
-								}
+						callback: (value) => {
+							if (Number.isInteger(value)) {
+								return value;
 							}
 						},
 					}

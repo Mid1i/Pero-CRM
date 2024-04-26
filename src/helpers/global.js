@@ -14,6 +14,9 @@ export const createGradient = (ref, point) => {
 };
 
 
+export const createArrayFromObject = (object, params) => object.value.map(item => item[params]);
+
+
 export const addWordEnding = (word, count) => {
 	if ([11, 12, 13, 14].includes(count)) {
 		return `${word}ов`;
@@ -27,4 +30,20 @@ export const addWordEnding = (word, count) => {
 	};
 
 	return `${word}${endings[count] || 'ов'}`
-}
+};
+
+
+export const addWordEndingPlural = (word, count) => {
+	if ([11, 12, 13, 14].includes(count)) {
+		return `${word.slice(0, -1)}ей`;
+	} 
+
+	const endings = {
+		1: 'ь',
+		2: 'я',
+		3: 'я',
+		4: 'я'
+	};
+
+	return `${word.slice(0, -1)}${endings[count] || 'ей'}`
+};
