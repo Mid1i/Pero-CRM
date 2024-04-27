@@ -109,113 +109,113 @@
 </template>
 
 <style scoped lang="scss">
-@import "@/assets/styles/variables.scss";
-@import "@/assets/styles/mixins.scss";
+	@import "@/assets/styles/variables.scss";
+	@import "@/assets/styles/mixins.scss";
 
-.aside-bar {
-	background: $--secondary-back;
-	display: flex;
-	flex-direction: column;
-	transition: all 0.2s linear;
-	height: 100%;
-	width: 13.8vw;
-
-	&__row {
-		align-items: center;
-		border-bottom: 0.05vw solid $--secondary-text;
-		display: flex;
-		padding: 1.04vw;
-		overflow: hidden;
-		position: relative;
-	}
-
-	&__wrapper {
-		flex: 0 0 auto;
-		margin-right: 0.52vw;
-		height: 2.08vw;
-		width: 2.08vw;
-	}
-
-	&__title {
-		@include title;
-		transition: all 0.2s linear;
-		text-transform: uppercase;
-	}
-
-	&__arrow {
-		align-items: center;
-		cursor: pointer;
-		display: flex;
-		flex: 0 0 auto;
-		justify-content: center;
-		margin-left: auto;
-		transition: all 0.2s linear;
-		height: 1.25vw;
-		width: 1.25vw;
-
-		& svg {
-			height: 0.73vw;
-			width: 0.42vw;
-		}
-
-		& path {
-			transition: all 0.2s linear;
-		}
-	}
-
-	&__menu {
+	.aside-bar {
+		background: $--secondary-back;
 		display: flex;
 		flex-direction: column;
-		gap: 0.52vw;
-		padding: 1.04vw 2.08vw;
+		transition: all 0.2s linear;
+		min-height: 100%;
+		width: 13.8vw;
 
-		&-category {
-			color: $--primary-text;
-			font-size: 0.63vw;
-			font-weight: 500;
-			padding-left: 0.52vw;
+		&__row {
+			align-items: center;
+			border-bottom: 0.05vw solid $--secondary-text;
+			display: flex;
+			padding: 1.04vw;
+			overflow: hidden;
+			position: relative;
+		}
+
+		&__wrapper {
+			flex: 0 0 auto;
+			margin-right: 0.52vw;
+			height: 2.08vw;
+			width: 2.08vw;
+		}
+
+		&__title {
+			@include title;
 			transition: all 0.2s linear;
 			text-transform: uppercase;
 		}
 
-		&-list {
+		&__arrow {
+			align-items: center;
+			cursor: pointer;
+			display: flex;
+			flex: 0 0 auto;
+			justify-content: center;
+			margin-left: auto;
+			transition: all 0.2s linear;
+			height: 1.25vw;
+			width: 1.25vw;
+
+			& svg {
+				height: 0.73vw;
+				width: 0.42vw;
+			}
+
+			& path {
+				transition: all 0.2s linear;
+			}
+		}
+
+		&__menu {
 			display: flex;
 			flex-direction: column;
 			gap: 0.52vw;
-			margin-bottom: 1.56vw;
+			padding: 1.04vw 2.08vw;
+
+			&-category {
+				color: $--primary-text;
+				font-size: 0.63vw;
+				font-weight: 500;
+				padding-left: 0.52vw;
+				transition: all 0.2s linear;
+				text-transform: uppercase;
+			}
+
+			&-list {
+				display: flex;
+				flex-direction: column;
+				gap: 0.52vw;
+				margin-bottom: 1.56vw;
+			}
+		}
+
+		&.small {
+			width: 5.99vw;
+
+			:where(.aside-bar__title, .item__text, .aside-bar__menu-category) {
+				visibility: hidden;
+				opacity: 0;
+				width: 0;
+			}
+
+			& .aside-bar__arrow {
+				transform: rotate(180deg);
+			}
+
+			& .aside-bar__row {
+				padding: 1.04vw 0.78vw;
+			}
+
+			& .aside-bar__menu {
+				padding: 1.04vw 1.82vw;
+			}
 		}
 	}
 
-	&.small {
-		width: 5.99vw;
-
-		:where(.aside-bar__title, .item__text, .aside-bar__menu-category) {
-			visibility: hidden;
-			opacity: 0;
-			width: 0;
+	@media (hover: hover) {
+		.aside-bar__arrow:hover path {
+			stroke: $--secondary-text;
 		}
 
-		& .aside-bar__arrow {
-			transform: rotate(180deg);
-		}
-
-		& .aside-bar__row {
-			padding: 1.04vw 0.78vw;
-		}
-
-		& .aside-bar__menu {
-			padding: 1.04vw 1.82vw;
+		.aside-bar__arrow:active path {
+			stroke: $--tertiary-text;
 		}
 	}
-}
-
-@media (hover: hover) {
-	.aside-bar__arrow:hover path {
-		stroke: $--secondary-text;
-	}
-
-	.aside-bar__arrow:active path {
-		stroke: $--tertiary-text;
-	}
-}
 </style>

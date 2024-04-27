@@ -26,11 +26,13 @@
     /* Aliases */
     "baseUrl": "src",
     "paths": {
-      "@/api/*": ["api/*"],
       "@/assets/*": ["assets/*"],
       "@/components/*": ["components/*"],
+      "@/composables/*": ["composables/*"],
       "@/helpers/*": ["helpers/*"],
-      "@/hooks/*": ["helpers/*"],
+      "@/layouts/*": ["layouts/*"],
+      "@/plugins/*": ["plugins/*"],
+      "@/router/*": ["router/*"],
       "@/views/*": ["views/*"]
     }
   },

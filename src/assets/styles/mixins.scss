@@ -41,6 +41,8 @@
 	border-radius: 1.04vw;
 	display: flex;
 	flex-direction: column;
+	gap: 1.04vw;
+	padding: 1.3vw;
 }
 
 @mixin skeleton {

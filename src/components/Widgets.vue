@@ -15,28 +15,28 @@
 	}
 	
 	watch([props.users, props.orders], () => {
-		if (props.users.status === 'success' && props.orders.status === 'success') {
+		if (props.users.currentWeek && props.orders.currentWeek) {
 			widgets.value = [
 				{
 					id: 1,
 					title: 'Зарегистрировались',
 					iconURL: 'visitors.svg',
-					amount: props.users.data.length,
-					previousAmount: props.users.previousWeekData.length
+					currentAmount: props.users.currentWeek.length,
+					prevAmount: props.users.prevWeek.length
 				},
 				{
 					id: 2,
 					title: 'Товаров продано',
 					iconURL: 'products.svg',
-					amount: onCountProducts(props.orders.data),
-					previousAmount: onCountProducts(props.orders.previousWeekData)
+					currentAmount: onCountProducts(props.orders.currentWeek),
+					prevAmount: onCountProducts(props.orders.prevWeek)
 				},
 				{
 					id: 3,
 					title: 'Общая выручка',
 					iconURL: 'revenue.svg',
-					amount: props.orders.data.reduce((value, item) => value += item.price, 0),
-					previousAmount: props.orders.previousWeekData.reduce((value, item) => value += item.price, 0),
+					currentAmount: props.orders.currentWeek.reduce((value, item) => value += item.price, 0),
+					prevAmount: props.orders.prevWeek.reduce((value, item) => value += item.price, 0),
 				}
 			]
 		}
@@ -45,11 +45,10 @@
 
 
 <template>
-	<div v-if="[users.status, orders.status].every(item => item === 'success')" class="content__widgets">
+	<div v-if="users.currentWeek && orders.currentWeek" class="content__widgets">
 		<WidgetsItem 
 			v-for="widget in widgets"
 			:key="widget.id"
-			:status="true"
 			:="widget"
 		/>
 	</div>
@@ -57,7 +56,6 @@
 		<WidgetsItem
 			v-for="index in 3"
 			:key="index"
-			:status="false"
 		/>
 	</div>
 </template>

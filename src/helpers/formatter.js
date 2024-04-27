@@ -1,4 +1,4 @@
-import { addLeadingZeros } from '@/helpers/Global.js';
+import { addLeadingZeros } from "@/helpers/global.js";
 
 
 export const onFormatDate = (date) => {

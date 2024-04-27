@@ -1,35 +1,22 @@
 <script setup>
-	import { onMounted, reactive, computed } from "vue";
-	import DailyUsersStatistics from "@/components/DailyUsersStatistics.vue";
-	import DailyStatistics from "@/components/DailyStatistics.vue";
-	import { getWidgetsData } from "@/api/WidgetsAPI.js";
+	import { reactive } from "vue";
+	import { revenueChartConfig, usersChartConfig } from "@/plugins/charts.js";
+	import { useWidgetsFetch } from "@/composables/fetch.js";
+	import DailyCharts from "@/components/DailyCharts.vue";
+	import { getDateDifference } from "@/helpers/date.js";
 	import Widgets from "@/components/Widgets.vue";
-	import { ordersURL, usersURL } from "@/api";
+	import { api } from "../globals.js";
 
-	const users = reactive({ status: "loading" });
-	const orders = reactive({ status: "loading" });
-
-	onMounted(async () => {
-		Object.assign(users, await getWidgetsData(usersURL, "date_of_registration"));
-		Object.assign(orders, await getWidgetsData(ordersURL, "date_of_creating"));
-	});
+	const users = reactive(useWidgetsFetch(api.users, 'date_of_registration'));
+	const orders = reactive(useWidgetsFetch(api.orders, 'date_of_creating'));
 </script>
 
 
 <template>
-	<Widgets :users="users" :orders="orders" />
-	<div class="content__charts">
-		<DailyStatistics :orders="orders"/>
-		<DailyUsersStatistics :users="users"/>
-	</div>
+	<Widgets :users="users" :orders="orders"/>
+	<DailyCharts :users="users" :orders="orders"/>
 </template>
 
 
 <style scoped lang="scss">
-	.content__charts {
-		display: flex;
-		gap: 2.6vw;
-		justify-content: space-between;
-		margin-bottom: 2.6vw;
-	}
 </style>
