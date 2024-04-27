@@ -1,6 +1,6 @@
 <script setup>
-	import WidgetsItem from "@/components/WidgetsItem.vue";
 	import { ref, watch } from "vue";
+	import WidgetsItem from "@/components/WidgetsItem.vue";
 
 	const props = defineProps({
 		users: Object,

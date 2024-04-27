@@ -5,7 +5,7 @@
 	import DailyCharts from "@/components/DailyCharts.vue";
 	import { getDateDifference } from "@/helpers/date.js";
 	import Widgets from "@/components/Widgets.vue";
-	import { api } from "../globals.js";
+	import { api } from "@/globals.js";
 
 	const users = reactive(useWidgetsFetch(api.users, 'date_of_registration'));
 	const orders = reactive(useWidgetsFetch(api.orders, 'date_of_creating'));

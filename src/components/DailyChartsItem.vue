@@ -1,6 +1,6 @@
 <script setup>
 	import { ref, watch } from "vue";
-	import { useCharts } from "@/composables/charts";
+	import { useCharts } from "@/composables/charts.js";
 
 	const props = defineProps({
 		config: Function,

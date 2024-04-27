@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
+      "@/": '/src/',
       "@/assets": '/src/assets',
       "@/components": '/src/components',
       "@/composables": '/src/composables',

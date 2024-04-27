@@ -1,8 +1,8 @@
 import { nextTick, ref } from "vue";
+import { Chart } from "chart.js/auto";
 import { createArrayFromObject, createGradient } from "@/helpers/global.js";
 import { onFormatDate, onFormatDay } from "@/helpers/formatter.js";
 import { getCurrentDate, getWeekDate } from "@/helpers/date.js";
-import { Chart } from "chart.js/auto";
 
 export const useCharts = (currentWeek, prevWeek, config, canvasRef, type) => {
 	const weekData = ref([])
