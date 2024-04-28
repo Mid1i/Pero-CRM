@@ -59,4 +59,5 @@ export const router = createRouter({
 	routes
 });
 
+
 router.afterEach(to => nextTick(() => document.title = to.meta.title));

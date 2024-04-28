@@ -46,29 +46,21 @@ export const useCharts = (currentWeek, prevWeek, config, canvasRef, type) => {
 	}
 
 	nextTick(() => {
-		const [daily, prevDaily, prevWeekDate, date, day] = Object.keys(
-			weekData.value[0]
-		).map(item => createArrayFromObject(weekData, item))
+		const [
+			daily, 
+			prevDaily, 
+			prevWeekDate, 
+			date, 
+			day
+		] = Object.keys(weekData.value[0]).map(item => createArrayFromObject(weekData, item));
 
 		if (type === "users") {
-			new Chart(
-				canvasRef.value.getContext("2d"),
-				config(daily, prevDaily, prevWeekDate, date, day)
-			)
+			new Chart(canvasRef.value.getContext("2d"), config(daily, prevDaily, prevWeekDate, date, day));
 		} else {
-			const topCanvasPoint = canvasRef.value.getBoundingClientRect().top
-			new Chart(
-				canvasRef.value.getContext("2d"),
-				config(
-					daily,
-					prevDaily,
-					date,
-					day,
-					createGradient(canvasRef.value, topCanvasPoint)
-				)
-			)
+			const topCanvasPoint = canvasRef.value.getBoundingClientRect().top;
+			new Chart(canvasRef.value.getContext("2d"), config(daily, prevDaily, date, day, createGradient(canvasRef.value, topCanvasPoint)));
 		}
 
-		Chart.defaults.font.family = "Manrope"
+		Chart.defaults.font.family = "Manrope";
 	})
 }

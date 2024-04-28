@@ -74,8 +74,11 @@
 		background: $--secondary-back;
 		display: flex;
 		flex-direction: column;
+		position: sticky;
+		left: 0px;
+		top: 0px;
 		transition: all 0.2s linear;
-		min-height: 100%;
+		height: 100vh;
 		width: 13.8vw;
 
 		&__row {

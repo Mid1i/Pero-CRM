@@ -1,5 +1,5 @@
-import { revenueAxisCallback, revenueTooltipCallbacks, usersAxisCallback, usersTooltipCallbacks } from "@/plugins/chartsCallbacks.js";
-import { xAxis, yAxis } from "@/plugins/chartsAxises.js";
+import { doughnutTooltipCallbacks, revenueAxisCallback, revenueTooltipCallbacks, usersAxisCallback, usersTooltipCallbacks } from "@/plugins/chartsCallbacks.js";
+import { xAxis, yAxis } from "@/plugins/chartsAxes.js";
 
 
 export const revenueChartConfig = (revenue,  ordersAmount, weekDates, weekDays, gradient) => ({
@@ -38,6 +38,31 @@ export const usersChartConfig = (users, prevWeekUsers, prevWeekDates, weekDates,
 });
 
 
+export const doughnutChartConfig = (data, labels, colors) => ({
+	type: "doughnut",
+	data: {
+		labels: labels,
+		datasets: [{
+			label: '',
+			data: data,
+			backgroundColor: colors,
+			hoverBackgroundColor: [...colors.map(item => `${item.slice(0, -1)}, .8)`)],
+			borderWidth: 0
+		}]
+	},
+	options: {
+		maintainAspectRatio: false,
+		responsive: true,
+		plugins: {
+			legend: {
+				display: false,
+			},
+			tooltip: tooltipOptions('doughnut')
+		}
+	} 
+})
+
+
 const usersChartBar = (data, color) => ({
 	barPercentage: 0.9,
 	backgroundColor: color,
@@ -55,37 +80,42 @@ const options = (type, weekDates, extraData, array) => ({
 		legend: {
 			display: false,
 		},
-		tooltip: {
-			cornerRadius: 10,
-			displayColors: false,
-			titleAlign: "center",
-			titleMarginBottom: 20,
-			bodyFont: {
-				size: 20,
-				weight: "bold",
-			},
-			bodyAlign: 'center',
-			callbacks: () => {
-				if (type === 'revenue') {
-					return revenueTooltipCallbacks(weekDates, extraData);
-				} else {
-					return usersTooltipCallbacks(weekDates, extraData);
-				}
-			},
-			padding: {
-				y: 10,
-				x: 20,
-			},
-			titleFont: fontSettings,
-			footerAlign: 'center',
-			footerMarginTop: 20,
-			footerFont: fontSettings
-		}
+		tooltip: tooltipOptions(type, weekDates, extraData, array)
 	},
 	scales: {
 		y: yAxis(type, array),
 		x: xAxis
 	},
+});
+
+
+const tooltipOptions = (type, weekDates, extraData, array) => ({
+	cornerRadius: 10,
+	displayColors: false,
+	titleAlign: "center",
+	titleMarginBottom: 20,
+	bodyFont: {
+		size: 20,
+		weight: "bold",
+	},
+	bodyAlign: 'center',
+	callbacks: () => {
+		const types = {
+			revenue: revenueTooltipCallbacks(weekDates, extraData),
+			users: usersTooltipCallbacks(weekDates, extraData),
+			doughnut: doughnutTooltipCallbacks()
+		}
+
+		return types[type];
+	},
+	padding: {
+		y: 10,
+		x: 20,
+	},
+	titleFont: fontSettings,
+	footerAlign: 'center',
+	footerMarginTop: 20,
+	footerFont: fontSettings
 });
 
 
