@@ -1,5 +1,5 @@
 <script setup>
-	import { ref, watch } from "vue";
+	import {computed, ref, inject} from "vue";
 	import WidgetsItem from "@/components/WidgetsItem.vue";
 
 	const props = defineProps({
@@ -9,53 +9,36 @@
 
 	const widgets = ref([]);
 
+	const checkStatus = inject("statusFunc");
+
 	const onCountProducts = (array) => {
 		const products = array.reduce((result, item) => [...result, ...item.order], []);
 		return products.reduce((result, item) => result += item.count, 0);
 	}
-	
-	watch([props.users, props.orders], () => {
-		if (props.users.currentWeek && props.orders.currentWeek) {
-			widgets.value = [
-				{
-					id: 1,
-					title: 'Зарегистрировались',
-					iconURL: 'visitors.svg',
-					currentAmount: props.users.currentWeek.length,
-					prevAmount: props.users.prevWeek.length
-				},
-				{
-					id: 2,
-					title: 'Товаров продано',
-					iconURL: 'products.svg',
-					currentAmount: onCountProducts(props.orders.currentWeek),
-					prevAmount: onCountProducts(props.orders.prevWeek)
-				},
-				{
-					id: 3,
-					title: 'Общая выручка',
-					iconURL: 'revenue.svg',
-					currentAmount: props.orders.currentWeek.reduce((value, item) => value += item.price, 0),
-					prevAmount: props.orders.prevWeek.reduce((value, item) => value += item.price, 0),
-				}
-			]
-		}
-	})
+
+	const onCountRevenue = (array) => array.reduce((value, item) => value += item.price, 0);
 </script>
 
 
 <template>
-	<div v-if="users.currentWeek && orders.currentWeek" class="content__widgets">
-		<WidgetsItem 
-			v-for="widget in widgets"
-			:key="widget.id"
-			:="widget"
-		/>
-	</div>
-	<div v-else class="content__widgets">
+	<div class="content__widgets">
 		<WidgetsItem
-			v-for="index in 3"
-			:key="index"
+			title="Зарегистрировались"
+			iconURL="visitors.svg"
+			:currentAmount="props.users.currentWeek.length"
+			:previousAmount="props.users.previousWeek.length"
+		/>
+		<WidgetsItem
+			title="Товаров продано"
+			iconURL="products.svg"
+			:currentAmount="onCountProducts(props.orders.currentWeek)"
+			:previousAmount="onCountProducts(props.orders.previousWeek)"
+		/>
+		<WidgetsItem
+			title="Общая выручка"
+			iconURL="revenue.svg"
+			:currentAmount="onCountRevenue(props.orders.currentWeek)"
+			:previousAmount="onCountRevenue(props.orders.previousWeek)"
 		/>
 	</div>
 </template>

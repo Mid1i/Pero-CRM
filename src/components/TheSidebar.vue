@@ -1,7 +1,7 @@
 <script setup>
 	import TheSidebarItem from "@/components/TheSidebarItem.vue";
-	import { sidebarItems } from "@/globals.js";
-	import { ref } from "vue";
+	import {sidebarItems} from "@/globals.js";
+	import {ref} from "vue";
 
 	const menuSize = ref(localStorage.getItem("menuSize") || "big")
 
@@ -17,7 +17,7 @@
 </script>
 
 <template>
-	<aside :class="['aside-bar', { small: menuSize === 'small' }]">
+	<aside :class="['aside-bar', {small: menuSize === 'small'}]">
 		<div class="aside-bar__row">
 			<div class="aside-bar__wrapper">
 				<img

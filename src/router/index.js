@@ -1,54 +1,54 @@
-import { createRouter, createWebHistory } from "vue-router";
-import { nextTick } from "vue";
+import {createRouter, createWebHistory} from "vue-router";
+import {nextTick} from "vue";
 
 
 const routes = [
 	{
-		path: '/',
-		component: () => import('@/views/Home.vue'),
+		path: "/",
+		component: () => import("@/views/Home.vue"),
 		meta: {
-			title: 'PERO CRM | Главная',
-			headerTitle: 'Главная'
+			title: "PERO CRM | Главная",
+			headerTitle: "Главная"
 		}
 	},
 	{
-		path: '/users',
-		component: () => import('@/views/Users.vue'),
+		path: "/users",
+		component: () => import("@/views/Users.vue"),
 		meta: {
-			title: 'PERO CRM | Пользователи',
-			headerTitle: 'Пользователи'
+			title: "PERO CRM | Пользователи",
+			headerTitle: "Пользователи"
 		}
 	},
 	{
-		path: '/orders',
-		component: () => import('@/views/Orders.vue'),
+		path: "/orders",
+		component: () => import("@/views/Orders.vue"),
 		meta: {
-			title: 'PERO CRM | Заказы',
-			headerTitle: 'Заказы'
+			title: "PERO CRM | Заказы",
+			headerTitle: "Заказы"
 		}
 	},
 	{
-		path: '/products',
-		component: () => import('@/views/Products.vue'),
+		path: "/products",
+		component: () => import("@/views/Products.vue"),
 		meta: {
-			title: 'PERO CRM | Товары',
-			headerTitle: 'Товары'
+			title: "PERO CRM | Товары",
+			headerTitle: "Товары"
 		}
 	},
 	{
-		path: '/settings',
-		component: () => import('@/views/Settings.vue'),
+		path: "/settings",
+		component: () => import("@/views/Settings.vue"),
 		meta: {
-			title: 'PERO CRM | Настройки',
-			headerTitle: 'Настройки'
+			title: "PERO CRM | Настройки",
+			headerTitle: "Настройки"
 		}
 	},
 	{
-		path: '/help',
-		component: () => import('@/views/Help.vue'),
+		path: "/help",
+		component: () => import("@/views/Help.vue"),
 		meta: {
-			title: 'PERO CRM | Помощь',
-			headerTitle: 'Помощь'
+			title: "PERO CRM | Помощь",
+			headerTitle: "Помощь"
 		}
 	}
 ];

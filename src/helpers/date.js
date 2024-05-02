@@ -1,19 +1,18 @@
-export const getCurrentDate = () => new Date();
+import {addLeadingZeros} from "@/helpers/global.js";
 
 
-export const getPreviousWeekDate = () => {
-	const currentDate = getCurrentDate();
+export const getCurrentDate = () => Date.now() / 1000;
 
-	return new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+export const getPastDate = (days) => new Date(getCurrentDate() - days * 24 * 60 * 60).getTime();
+
+
+export const getFormattedDate = (date) => {
+	const oldDate = new Date(date * 1000);
+	
+	const year = oldDate.getFullYear();
+	const month = addLeadingZeros(oldDate.getMonth() + 1);
+	const day = addLeadingZeros(oldDate.getDate());
+	
+	return `${year}-${month}-${day}`;
 }
-
-
-export const getDateDifference = (date) => {
-	const currentDate = getCurrentDate();
-	const formatDate = new Date(date);
-
-	return Number(currentDate.getDate() - formatDate.getDate());
-}
-
-
-export const getWeekDate = (date, index) => new Date(date - index * 24 * 60 * 60 * 1000);

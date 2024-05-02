@@ -26,7 +26,7 @@
 			display: flex;
 			flex: 1 0 auto;
 			flex-direction: column;
-			padding: 1.04vw 2.08vw 2.08vw;
+			padding: 1.04vw 2.6vw 2.08vw;
 		}
 	}
 </style>

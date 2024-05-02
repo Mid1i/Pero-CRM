@@ -1,7 +1,7 @@
 <script setup>
-	import { ref, nextTick } from "vue";
-	import { Chart } from "chart.js/auto";
-	import { doughnutChartConfig } from "@/plugins/charts.js";
+	import {ref, nextTick, watch, computed} from "vue";
+	import {Chart} from "chart.js/auto";
+	import {doughnutChartConfig} from "@/plugins/charts.js";
 
 	const props = defineProps({
 		data: Array,
@@ -11,14 +11,20 @@
 
 	const canvasRef = ref(null);
 
-	nextTick(() => {
-		new Chart(canvasRef.value.getContext("2d"), doughnutChartConfig(props.data, props.labels, props.colors))
+	const checkStatus = computed(() => props.data.every(item => item !== null));
+
+	watch(checkStatus, () => {
+		if (checkStatus.value) {
+			nextTick(() => {
+				new Chart(canvasRef.value.getContext("2d"), doughnutChartConfig(props.data.map(item => item.length), props.labels, props.colors));
+			})
+		}
 	});
 </script>
 
 
 <template>
-	<div :class="['chart__section', {loading: !data}]">
+	<div :class="['chart__section', {loading: !checkStatus}]">
 		<canvas ref="canvasRef"></canvas>
 	</div>
 	<ul class="chart__labels">
@@ -38,8 +44,8 @@
 	@import "@/assets/styles/mixins.scss";
 
 	.chart__section {
-		height: 13vw;
-		width: 13vw;
+		height: 10.4vw;
+		width: 10.4vw;
 
 		&.loading {
 			@include skeleton;
@@ -50,20 +56,20 @@
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
-		gap: 1.8vw;
+		gap: 1vw;
 
 		&-item {
 			@include table-text;
 			align-items: center;
 			display: flex;
 			font-weight: 500;
-			gap: 0.52vw;
+			gap: 0.46vw;
 		}
 
 		&-color {
 			border-radius: 100%;
-			height: 1.04vw;
-			width: 1.04vw;
+			height: 0.83vw;
+			width: 0.83vw;
 		}
 	}
 </style>

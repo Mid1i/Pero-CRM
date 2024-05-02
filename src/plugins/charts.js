@@ -1,5 +1,5 @@
-import { doughnutTooltipCallbacks, revenueAxisCallback, revenueTooltipCallbacks, usersAxisCallback, usersTooltipCallbacks } from "@/plugins/chartsCallbacks.js";
-import { xAxis, yAxis } from "@/plugins/chartsAxes.js";
+import {doughnutTooltipCallbacks, revenueAxisCallback, revenueTooltipCallbacks, usersAxisCallback, usersTooltipCallbacks} from "@/plugins/chartsCallbacks.js";
+import {xAxis, yAxis} from "@/plugins/chartsAxes.js";
 
 
 export const revenueChartConfig = (revenue,  ordersAmount, weekDates, weekDays, gradient) => ({
@@ -21,7 +21,7 @@ export const revenueChartConfig = (revenue,  ordersAmount, weekDates, weekDays, 
 			},
 		],
 	},
-	options: options('revenue', weekDates, ordersAmount, revenue)
+	options: options("revenue", weekDates, ordersAmount, revenue)
 });
 
 
@@ -30,11 +30,11 @@ export const usersChartConfig = (users, prevWeekUsers, prevWeekDates, weekDates,
 		data: {
 			labels: weekDays,
 			datasets: [
-				usersChartBar(users, 'rgb(10, 132, 255, 1)'),
-				usersChartBar(prevWeekUsers, 'rgb(23, 60, 97)')
+				usersChartBar(users, "rgb(10, 132, 255, 1)"),
+				usersChartBar(prevWeekUsers, "rgb(23, 60, 97)")
 			],
 	},
-	options: options('users', weekDates, prevWeekDates)
+	options: options("users", weekDates, prevWeekDates)
 });
 
 
@@ -43,7 +43,7 @@ export const doughnutChartConfig = (data, labels, colors) => ({
 	data: {
 		labels: labels,
 		datasets: [{
-			label: '',
+			label: "",
 			data: data,
 			backgroundColor: colors,
 			hoverBackgroundColor: [...colors.map(item => `${item.slice(0, -1)}, .8)`)],
@@ -57,7 +57,7 @@ export const doughnutChartConfig = (data, labels, colors) => ({
 			legend: {
 				display: false,
 			},
-			tooltip: tooltipOptions('doughnut')
+			tooltip: tooltipOptions("doughnut")
 		}
 	} 
 })
@@ -98,7 +98,7 @@ const tooltipOptions = (type, weekDates, extraData, array) => ({
 		size: 20,
 		weight: "bold",
 	},
-	bodyAlign: 'center',
+	bodyAlign: "center",
 	callbacks: () => {
 		const types = {
 			revenue: revenueTooltipCallbacks(weekDates, extraData),
@@ -113,7 +113,7 @@ const tooltipOptions = (type, weekDates, extraData, array) => ({
 		x: 20,
 	},
 	titleFont: fontSettings,
-	footerAlign: 'center',
+	footerAlign: "center",
 	footerMarginTop: 20,
 	footerFont: fontSettings
 });
@@ -121,5 +121,5 @@ const tooltipOptions = (type, weekDates, extraData, array) => ({
 
 const fontSettings = {
 	size: 14,
-	weight: 'normal',
+	weight: "normal",
 };

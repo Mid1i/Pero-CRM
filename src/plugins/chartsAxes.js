@@ -1,4 +1,4 @@
-import { revenueAxisCallback, usersAxisCallback } from "@/plugins/chartsCallbacks.js";
+import {revenueAxisCallback, usersAxisCallback} from "@/plugins/chartsCallbacks.js";
 
 
 export const xAxis = {
@@ -37,7 +37,7 @@ export const yAxis = (type, array) => ({
 			size: 14,
 		},
 		callback: (value, index) => {
-			if (type === 'revenue') {
+			if (type === "revenue") {
 				return revenueAxisCallback(value, index, array);
 			} else {
 				return usersAxisCallback(value);

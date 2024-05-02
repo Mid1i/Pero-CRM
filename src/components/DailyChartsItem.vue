@@ -1,22 +1,22 @@
 <script setup>
-	import { ref, watch } from "vue";
-	import { useCharts } from "@/composables/charts.js";
+	import {ref, inject, watch} from "vue";
+	import {useCharts} from "@/composables/charts.js";
 
 	const props = defineProps({
 		config: Function,
 		currentWeek: Array,
+		previousWeek: Array,
 		error: String,
-		prevWeek: Array,
 		title: String,
 		type: String
 	});
 
 	const canvasRef = ref(null);
 
-	watch(props, () => {
-		if (props.currentWeek) {
-			useCharts(props.currentWeek, props.prevWeek, props.config, canvasRef, props.type);
-		}
+	const checkStatus = inject("statusFunc");
+
+	watch(checkStatus, () => {
+		if (checkStatus.value) useCharts(props.currentWeek, props.previousWeek, props.config, canvasRef, props.type);
 	});
 </script>
 
@@ -30,8 +30,8 @@
 				<span class="chart__right-text">Прошлая неделя</span>
 			</div>
 		</div>
-		<div :class="['chart__section', {loading: !currentWeek}]">
-			<canvas v-if="currentWeek" ref="canvasRef"></canvas>
+		<div :class="['chart__section', {loading: !checkStatus}]">
+			<canvas v-if="checkStatus" ref="canvasRef"></canvas>
 		</div>
 	</div>
 </template>

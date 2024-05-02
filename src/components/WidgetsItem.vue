@@ -1,52 +1,44 @@
 <script setup>
-	import { onFormatPrice } from "@/helpers/formatter.js";
+	import {inject} from "vue";
+	import {onFormatPrice} from "@/helpers/formatter.js";
 
 	const props = defineProps({
 		title: String,
+		status: String,
 		currentAmount: Number,
-		prevAmount: Number,
+		previousAmount: Number,
 		iconURL: String,
 	});
 
+	const checkStatus = inject("statusFunc");
+	
 	const compareAmounts = () => {
-		if (props.prevAmount === 0) {
+		if (props.previousAmount === 0) {
 			return "+100%";
 		}
 
-		const difference = Number((((props.currentAmount - props.prevAmount) / props.prevAmount) * 100).toFixed(2));
+		const difference = Number((((props.currentAmount - props.previousAmount) / props.previousAmount) * 100).toFixed(2));
 
-		if (props.prevAmount > props.currentAmount) {
+		if (props.previousAmount > props.currentAmount) {
 			return `${difference}%`;
 		} else {
 			return `+${difference}%`;
 		}
 	};
-
-	const comparisonClasses = [
-		'widget__comparison',
-		{ increase: props.prevAmount < props.currentAmount },
-		{ decrease: props.prevAmount > props.currentAmount },
-	];
-
-	const iconClasses = [
-		'widget__icon',
-		{ loading: !props.currentAmount },
-		{ bigger: props.iconURL !== 'visitors.svg' }
-	];
 </script>
 
 
 <template>
 	<section class="content__widgets-item widget">
-		<h3 :class="['widget__title', { loading: !currentAmount }]">{{ title }}</h3>
-		<div :class="['widget__row', { loading: !currentAmount }]">
+		<h3 class="widget__title">{{ title }}</h3>
+		<div v-if="checkStatus" class="widget__row">
 			<span class="widget__amount">{{ title === "Общая выручка" ? onFormatPrice(currentAmount) : currentAmount }}</span>
-			<span v-if="currentAmount" :class="comparisonClasses">{{	compareAmounts() }}</span>
+			<span :class="['widget__comparison',  props.previousAmount < props.currentAmount ? 'increase' : 'decrease']">{{ compareAmounts() }}</span>
 		</div>
+		<div v-else class="widget__row loading"></div>
 		<p class="widget__text">По сравнению с предыдущей неделей</p>
-		<div :class="iconClasses">
+		<div :class="['widget__icon', {bigger: props.iconURL !== 'visitors.svg'}]">
 			<img
-				v-if="currentAmount"
 				:alt="title"
 				class="widget__image image"
 				:src="`/src/assets/images/Widgets/${iconURL}`"
@@ -67,12 +59,6 @@
 		&__title {
 			@include subtitle;
 			color: $--secondary-text;
-
-			&.loading {
-				@include skeleton;
-				height: 1.1vw;
-				width: 10.4vw;
-			}
 		}
 
 		&__row {
@@ -82,7 +68,7 @@
 
 			&.loading {
 				@include skeleton;
-				height: 3vw;
+				height: 3.2vw;
 				width: 12vw;
 			}
 		}
@@ -124,13 +110,6 @@
 
 			&.bigger {
 				width: 3.6vw;
-			}
-
-			&.loading {
-				@include skeleton;
-				position: absolute;
-				height: 3.9vw;
-				width: 3.9vw;
 			}
 		}
 	}

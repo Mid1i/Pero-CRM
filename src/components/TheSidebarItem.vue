@@ -1,5 +1,5 @@
 <script setup>
-	import { RouterLink, useRouter } from "vue-router";
+	import {RouterLink, useRouter} from "vue-router";
 	
 	defineProps({
 		title: String,

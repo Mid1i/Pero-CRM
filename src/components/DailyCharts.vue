@@ -1,7 +1,6 @@
 <script setup>
-	import { revenueChartConfig, usersChartConfig } from "@/plugins/charts.js";
+	import {revenueChartConfig, usersChartConfig} from "@/plugins/charts.js";
 	import DailyChartsItem from "@/components/DailyChartsItem.vue";
-	import { useWidgetsFetch } from "@/composables/fetch.js";
 
 	defineProps({
 		orders: Object,

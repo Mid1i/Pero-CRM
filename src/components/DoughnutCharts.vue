@@ -1,56 +1,33 @@
 <script setup>
-	import { reactive, watch } from "vue";
+	import {reactive, inject, watch} from "vue";
 	import DoughnutChartsItem from "@/components/DoughnutChartsItem.vue";
+	import {useFetch} from "@/composables/fetch.js";
+	import {api} from "@/globals.js";
 
-	const props = defineProps({
-		title: String,
-		orders: Object,
-		users: Object
+	const params = (val1, val2) => ({
+		"age[from]": val1,
+		"age[to]": val2
 	});
 
-	const usersStatistics = reactive({
-		age: {
-			young: 0,
-			average: 0,
-			old: 0
-		},
-		gender: {
-			male: 0,
-			female: 0
-		}
-	});
+	const maleUsers = reactive(useFetch(api.users.url, {gender: "male"}));
+	const femaleUsers = reactive(useFetch(api.users.url, {gender: "female"}));
 
-
-	watch(props, () => {
-		if (props.users.data) {
-			props.users.data.map(user => {
-				usersStatistics.gender[user.gender] ++;
-
-				if (user.age < 30) {
-					usersStatistics.age.young ++;
-				} else if (user.age > 50) {
-					usersStatistics.age.average ++;
-				} else {
-					usersStatistics.age.old ++;
-				}
-			})
-		}
-	});
+	const youngUsers = reactive(useFetch(api.users.url, params(0, 30)));
+	const averageUsers = reactive(useFetch(api.users.url, params(31, 50)));
+	const oldUsers = reactive(useFetch(api.users.url, params(51, 150)));
 </script>
 
 
 <template>
-	<div class="content__users users">
-		<h4 class="users__title">{{ title }}</h4>
+	<div class="content__charts charts">
+		<h4 class="charts__title">Зарегистрированные пользователи</h4>
 		<DoughnutChartsItem
-			v-if="users.data"
-			:data="Object.values(usersStatistics.gender)"
+			:data="[maleUsers.data, femaleUsers.data]"
 			:colors="['rgb(85, 161, 232)', 'rgb(238, 110, 132)']"
 			:labels="['Мужчины', 'Женщины']"
 		/>
 		<DoughnutChartsItem
-			v-if="users.data"
-			:data="Object.values(usersStatistics.age)"
+			:data="[youngUsers.data, averageUsers.data, oldUsers.data]"
 			:colors="['rgb(255, 204, 0)', 'rgb(255, 149, 0)', 'rgb(76, 217, 100)']"
 			:labels="['Меньше 30 лет', '30-50 лет', 'Больше 50 лет']"
 		/>
@@ -61,14 +38,16 @@
 <style scoped lang="scss">
 	@import "@/assets/styles/mixins.scss";
 
-	.users {
+	.charts {
 		align-items: center;
 		@include secondary-layout;
-		flex: 0 0 25%;
+		flex: 0 0 15.5vw;
 		min-width: 0px;
 
 		&__title {
 			@include subtitle;
+			max-width: 10.42vw;
+			text-align: center;
 		}
 	}
 </style>
