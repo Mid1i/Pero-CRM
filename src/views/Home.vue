@@ -1,18 +1,18 @@
 <script setup>
 	import {reactive, computed, provide} from "vue";
 	import BestSellingProducts from "@/components/BestSellingProducts.vue";
+	import {useTwoWeeksData} from "@/composables/separateTwoWeeksData.js";
 	import MostActiveUsers from "@/components/MostActiveUsers.vue";
 	import DoughnutCharts from "@/components/DoughnutCharts.vue";
 	import DailyCharts from "@/components/DailyCharts.vue";
-	import {useWeekData} from "@/composables/weekData.js";
 	import Widgets from "@/components/Widgets.vue";
 	import {api} from "@/globals.js";
 
 
-	const users = reactive(useWeekData(api.users.url, api.users.dateType));
-	const orders = reactive(useWeekData(api.orders.url, api.orders.dateType));
+	const users = reactive(useTwoWeeksData(api.users.url, "date_of_registration"));
+	const orders = reactive(useTwoWeeksData(api.orders.url, "date_of_creating"));
 
-	const checkStatus = computed(() => users.status === 'success' && orders.status === 'success');
+	const checkStatus = computed(() => users.status === "success" && orders.status === "success");
 
 	provide("statusFunc", checkStatus);
 </script>
@@ -24,7 +24,7 @@
 	<div class="content__row">
 		<DoughnutCharts/>
 		<BestSellingProducts :data="orders.data"/>
-		<MostActiveUsers :orders="orders"/>
+		<MostActiveUsers :orders="orders.currentWeek"/>
 	</div> 
 </template>
 

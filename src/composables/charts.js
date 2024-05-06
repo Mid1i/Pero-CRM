@@ -8,27 +8,22 @@ import {onFormatDay} from "@/helpers/formatter.js";
 export const useCharts = (currentWeek, previousWeek, config, canvasRef, type) => {
 	const weekData = ref([]);
 
-	const datesComparison = (item, date) => {
-		if (getFormattedDate(item.date_of_registration) === date) {
-			return 1;
-		}
-		return 0;
-	}
+	const datesComparison = (item, date) => getFormattedDate(item.date_of_registration) === date ? 1 : 0;
 
-	for (let i = 0; i < 7; i++) {
-		const date = getFormattedDate(getPastDate(7 - i - 1));
-		const previousWeekDate = getFormattedDate(getPastDate(14 - i - 1));
-		const day = onFormatDay(new Date(date).getDay());
+	for (let i = 1; i <= 7; i++) {
+		const currentDate = getFormattedDate(getPastDate(7 - i));
+		const previousWeekDate = getFormattedDate(getPastDate(14 - i));
+		const day = onFormatDay(new Date(currentDate).getDay());
 		
 		let data = 0;
 		let previousData = 0;
 
 		if (type === "users") {
-			currentWeek.map(item => (data += datesComparison(item, date)));
+			currentWeek.map(item => (data += datesComparison(item, currentDate)));
 			previousWeek.map(item => (previousData += datesComparison(item, previousWeekDate)));
 		} else {
 			currentWeek.map(item => {
-				if (getFormattedDate(item.date_of_creating) === date) {
+				if (getFormattedDate(item.date_of_creating) === currentDate) {
 					data += item.price;
 					previousData++;
 				}
@@ -39,7 +34,7 @@ export const useCharts = (currentWeek, previousWeek, config, canvasRef, type) =>
 			data: data,
 			previousData: previousData,
 			previousWeekDate: previousWeekDate,
-			date: date,
+			date: currentDate,
 			day: day,
 		});
 	}

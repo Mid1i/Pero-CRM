@@ -3,7 +3,7 @@ import {getPastDate, getCurrentDate} from "@/helpers/date.js";
 import {useFetch} from "@/composables/fetch.js";
 
 
-export const useWeekData = (url, dateType) => {
+export const useTwoWeeksData = (url, dateType) => {
 	const currentWeek = ref([]);
 	const previousWeek = ref([]);
 	const status = ref("loading");

@@ -112,7 +112,9 @@ const tooltipOptions = (type, weekDates, extraData, array) => ({
 		y: 10,
 		x: 20,
 	},
+	titleColor: "rgb(235, 235, 245, 0.6)",
 	titleFont: fontSettings,
+	footerColor: "rgb(235, 235, 245, 0.6)",
 	footerAlign: "center",
 	footerMarginTop: 20,
 	footerFont: fontSettings
