@@ -50,7 +50,7 @@
 	watch(checkStatus, () => {
 		if (checkStatus.value && getActiveUsers() > 0) {
 			const params = activeUsers.value.reduce((value, user) => value += `id[]=${user.id}&`, "?");
-			Object.assign(activeUsersData, useFetch(`${api.users.url}${params.slice(0, -1)}`));
+			Object.assign(activeUsersData, useFetch(`${api.users}${params.slice(0, -1)}`));
 		}
 	});
 

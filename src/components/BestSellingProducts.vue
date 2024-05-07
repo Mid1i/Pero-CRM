@@ -1,13 +1,13 @@
 <script setup>
-	defineProps({
-		data: Array
+	const props = defineProps({
+		orders: Array
 	});
 </script>
 
 
 <template>
 	<div class="products">
-
+		<h4 class="products__title">Самые продаваемые товары за неделю</h4>
 	</div>
 </template>
 
@@ -19,5 +19,10 @@
 	.products {
 		@include secondary-layout;
 		flex: 1 0 auto;
+
+		&__title {
+			@include subtitle;
+			text-align: center;
+		}
 	}
 </style>

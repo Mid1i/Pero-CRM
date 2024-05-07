@@ -1,5 +1,5 @@
 <script setup>
-	import {ref, inject, watch} from "vue";
+	import {ref, inject, onUpdated} from "vue";
 	import {useCharts} from "@/composables/charts.js";
 
 	const props = defineProps({
@@ -14,10 +14,10 @@
 	const canvasRef = ref(null);
 
 	const checkStatus = inject("statusFunc");
-
-	watch(checkStatus, () => {
-		if (checkStatus.value) useCharts(props.currentWeek, props.previousWeek, props.config, canvasRef, props.type);
-	});
+	
+	onUpdated(() => {
+		if (canvasRef.value) useCharts(props.currentWeek, props.previousWeek, props.config, canvasRef, props.type);
+	})
 </script>
 
 

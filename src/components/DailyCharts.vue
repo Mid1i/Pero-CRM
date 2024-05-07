@@ -2,7 +2,7 @@
 	import {revenueChartConfig, usersChartConfig} from "@/plugins/charts.js";
 	import DailyChartsItem from "@/components/DailyChartsItem.vue";
 
-	defineProps({
+	const props = defineProps({
 		orders: Object,
 		users: Object
 	});

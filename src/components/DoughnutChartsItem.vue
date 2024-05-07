@@ -11,13 +11,13 @@
 
 	const canvasRef = ref(null);
 
-	const checkStatus = computed(() => props.data.every(item => item !== null));
+	const checkStatus = computed(() => props.data.every(item => item));
 
 	watch(checkStatus, () => {
 		if (checkStatus.value) {
-			nextTick(() => {
-				new Chart(canvasRef.value.getContext("2d"), doughnutChartConfig(props.data.map(item => item.length), props.labels, props.colors));
-			})
+			nextTick(
+				() => new Chart(canvasRef.value.getContext("2d"), doughnutChartConfig(props.data.map(item => item.length), props.labels, props.colors))
+			);
 		}
 	});
 </script>

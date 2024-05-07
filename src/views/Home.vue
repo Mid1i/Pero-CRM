@@ -9,8 +9,8 @@
 	import {api} from "@/globals.js";
 
 
-	const users = reactive(useTwoWeeksData(api.users.url, "date_of_registration"));
-	const orders = reactive(useTwoWeeksData(api.orders.url, "date_of_creating"));
+	const users = reactive(useTwoWeeksData(api.users, "date_of_registration"));
+	const orders = reactive(useTwoWeeksData(api.orders, "date_of_creating"));
 
 	const checkStatus = computed(() => users.status === "success" && orders.status === "success");
 
@@ -23,7 +23,7 @@
 	<DailyCharts :users="users" :orders="orders"/>
 	<div class="content__row">
 		<DoughnutCharts/>
-		<BestSellingProducts :data="orders.data"/>
+		<BestSellingProducts :orders="orders.currentWeek"/>
 		<MostActiveUsers :orders="orders.currentWeek"/>
 	</div> 
 </template>

@@ -2,13 +2,12 @@ import {doughnutTooltipCallbacks, revenueAxisCallback, revenueTooltipCallbacks, 
 import {xAxis, yAxis} from "@/plugins/chartsAxes.js";
 
 
-export const revenueChartConfig = (revenue,  ordersAmount, weekDates, weekDays, gradient) => ({
+export const revenueChartConfig = (revenue,  ordersAmount, weekDates, weekDays) => ({
 	type: "line",
 	data: {
 		labels: weekDays,
 		datasets: [
 			{
-				backgroundColor: gradient,
 				borderColor: "rgb(10, 132, 255, 1)",
 				borderJoinStyle: "round",
 				borderWidth: 2,
@@ -18,14 +17,14 @@ export const revenueChartConfig = (revenue,  ordersAmount, weekDates, weekDays, 
 				pointHitRadius: 20,
 				pointRadius: 6,
 				tension: 0.3,
-			},
+			}
 		],
 	},
 	options: options("revenue", weekDates, ordersAmount, revenue)
 });
 
 
-export const usersChartConfig = (users, prevWeekUsers, prevWeekDates, weekDates, weekDays) => ({
+export const usersChartConfig = (users, prevWeekUsers, weekDates, weekDays, prevWeekDates) => ({
 	type: "bar",
 		data: {
 			labels: weekDays,

@@ -13,18 +13,20 @@ export const useTwoWeeksData = (url, dateType) => {
 		[`${dateType}[to]`]: getCurrentDate()
 	};
 
-	const {data, error} = useFetch(url, params);
+	const {data, error, loading} = useFetch(url, params);
 
 
-	watch(data, () => {
-		data?.value.map(item => {
-			if (item[dateType] > getPastDate(7)) {
-				currentWeek.value.push(item);
-			} else {
-				previousWeek.value.push(item);
-			}
-		});
-		status.value = "success";
+	watch(loading, () => {
+		if (!loading.value && data.value) {
+			data.value.map(item => {
+				if (item[dateType] > getPastDate(7)) {
+					currentWeek.value.push(item);
+				} else {
+					previousWeek.value.push(item);
+				}
+			});
+			status.value = "success";
+		}
 	});
 
 	return {data, error, currentWeek, previousWeek, status};

@@ -48,11 +48,12 @@ export const useCharts = (currentWeek, previousWeek, config, canvasRef, type) =>
 			day
 		] = Object.keys(weekData.value[0]).map(item => createArrayFromObject(weekData, item));
 
-		if (type === "users") {
-			new Chart(canvasRef.value.getContext("2d"), config(data, previousData, previousWeekDate, date, day));
-		} else {
-			const topCanvasPoint = canvasRef.value.getBoundingClientRect().top;
-			new Chart(canvasRef.value.getContext("2d"), config(data, previousData, date, day, createGradient(canvasRef.value, topCanvasPoint)));
+		const chart = new Chart(canvasRef.value.getContext("2d"), config(data, previousData, date, day, previousWeekDate));
+
+		if (type !== "users") {
+			const topCanvasPoint = canvasRef.value.getBoundingClientRect().top;			
+			chart.data.datasets[0].backgroundColor = createGradient(canvasRef.value, topCanvasPoint);
+			chart.update();
 		}
 
 		Chart.defaults.font.family = "Manrope";
