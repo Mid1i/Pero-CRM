@@ -4,10 +4,10 @@
 	const props = defineProps({
 		index: Number,
 		name: String,
+		surname: String,
 		count: Number,
-		price: Number,
-		status: String
-	})
+		price: Number
+	});
 </script>
 
 
@@ -15,7 +15,7 @@
 	<li class="users__list-el user">
 		<span class="user__number">{{ index }}</span>
 		<div v-if="name && count && price" class="user__right">
-			<span class="user__title">{{ name }}</span>
+			<span class="user__title">{{ `${surname} ${name}` }}</span>
 			<span class="user__text">
 				Всего заказов: 
 				<span>{{ count }}</span>

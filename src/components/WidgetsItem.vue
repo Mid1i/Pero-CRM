@@ -1,5 +1,5 @@
 <script setup>
-	import {inject} from "vue";
+	import {inject, computed} from "vue";
 	import {onFormatPrice} from "@/helpers/formatter.js";
 
 	const props = defineProps({
@@ -33,7 +33,7 @@
 		<h3 class="widget__title">{{ title }}</h3>
 		<div v-if="checkStatus" class="widget__row">
 			<span class="widget__amount">{{ title === "Общая выручка" ? onFormatPrice(currentAmount) : currentAmount }}</span>
-			<span :class="['widget__comparison',  props.previousAmount < props.currentAmount ? 'increase' : 'decrease']">{{ compareAmounts() }}</span>
+			<span :class="['widget__comparison',  props.previousAmount <= props.currentAmount ? 'increase' : 'decrease']">{{ compareAmounts() }}</span>
 		</div>
 		<div v-else class="widget__row loading"></div>
 		<p class="widget__text">По сравнению с предыдущей неделей</p>
