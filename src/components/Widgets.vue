@@ -2,6 +2,7 @@
 	import {computed, ref, inject} from "vue";
 	import WidgetsItem from "@/components/WidgetsItem.vue";
 
+
 	const props = defineProps({
 		users: Object,
 		orders: Object
@@ -49,6 +50,7 @@
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		gap: 2.6vw;
+		
 		margin-bottom: 2.6vw;
 	}
 </style>

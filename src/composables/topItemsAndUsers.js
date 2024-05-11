@@ -1,55 +1,60 @@
 import {ref, reactive, watch} from "vue";
-import {useFetch} from "@/composables/fetch.js";
+import {useFetch} from "@/composables/fetch";
+import {createArrayFromObject} from "@/helpers/global";
 
 
-export const useFindTopItemsAndUsers = (orders, status, url) => {
+export const useFindTopItemsAndUsers = (orders, status, url, type) => {
 	const topItemsApi = reactive({});
 	const loading = ref(true);
 	const topItems = ref([]);
 
 	const getTopItems = () => {
-		orders.map(order => findItem(order.user_id || order.id) ? editItem(order) : addItem(order));
+		type === "products" ? createArrayFromObject(orders, "order").map(order => order.map(getItem)) : orders.map(getItem);
+		
 		sortItems();
 
 		if (topItems.value.length > 0) {
 			const params = topItems.value.reduce((value, item) => value += `id[]=${item.id}&`, "?");
 			Object.assign(topItemsApi, useFetch(`${url}${params.slice(0, -1)}`));
 		};
+
+		return topItems.value.length;
 	}
 
-	const addItem = ({id, user_id, order, count, price}) => {
+	const getItem = (item) => findItem(item.user_id || item.id) ? editItem(item) : addItem(item);
+
+	const findItem = (id) => topItems.value.find((item) => item.id === id);
+
+	const addItem = ({id, user_id, count, price}) => {
 		const item = {
 			id: user_id || id, 
-			count: order ? getCounts(order) : count, 
-			price: price
+			count: count || 1, 
+			revenue: price
 		};
 
 		topItems.value.push(item);
 	}
 
-	const editItem = ({id, user_id, order, count, price}) => {
+	const editItem = ({id, user_id, count, price}) => {
 		const currentItem = findItem(user_id || id);
 		const index = topItems.value.indexOf(currentItem);
 
 		topItems.value[index] = {
 			...currentItem, 
-			count: currentItem.count + (order ? getCounts(order) : count), 
-			price: currentItem.price + price
+			count: currentItem.count + (count || 1), 
+			revenue: currentItem.revenue + price
 		};
 	}
 
 	const sortItems = () => {
 		topItems.value.sort((val1, val2) => {
-			return val1.count < val2.count ? 1
-					 : val1.count > val2.count ? -1
-					 : 0;
+			if (val1.count < val2.count) return 1;
+			if (val1.count > val2.count) return -1;
+			if (val1.revenue < val2.revenue) return 1;
+			if (val1.revenue > val2.revenue) return -1;
+			return 0;
 		});
 	}
-
-	const findItem = (id) => topItems.value.find(item => item.id === id);
-
-	const getCounts = (order) => order.reduce((value, product) => value += product.count, 0);
-
 
 	watch(status, () => {
 		if (status.value && getTopItems() > 0) {
@@ -59,7 +64,7 @@ export const useFindTopItemsAndUsers = (orders, status, url) => {
 	});
 
 	watch(() => topItemsApi.loading, () => {
-		if (!topItemsApi.loading) {
+		if (topItemsApi.data) {
 			topItems.value = topItems.value.map(item => ({...item, ...topItemsApi.data.find(obj => obj.id === item.id)}));
 			loading.value = false;
 		}

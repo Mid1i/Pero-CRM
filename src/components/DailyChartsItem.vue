@@ -1,6 +1,7 @@
 <script setup>
 	import {ref, inject, onUpdated} from "vue";
-	import {useCharts} from "@/composables/charts.js";
+	import {useCharts} from "@/composables/charts";
+
 
 	const props = defineProps({
 		config: Function,
@@ -41,8 +42,10 @@
 	@import "@/assets/styles/variables.scss";
 	@import "@/assets/styles/mixins.scss";
 
+
 	.chart {
 		@include secondary-layout;
+
 		flex: 0 0 47.7%;
 		min-width: 0px;
 
@@ -62,14 +65,17 @@
 			gap: 0.78vw;
 
 			&-text {
-				align-items: center;
 				@include table-text;
+
+				align-items: center;
 				display: flex;
 				gap: 0.26vw;
 
 				&::before {
 					border-radius: 100%;
+					
 					content: "";
+					
 					display: block;
 					height: 0.63vw;
 					width: 0.63vw;

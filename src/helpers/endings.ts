@@ -1,4 +1,4 @@
-export const addWordEnding = (word, count) => {
+export const addWordEnding = (word: string, count: number) => {
 	if ([11, 12, 13, 14].includes(count)) {
 		return `${word}ов`;
 	} 
@@ -14,7 +14,7 @@ export const addWordEnding = (word, count) => {
 };
 
 
-export const addWordEndingPlural = (word, count) => {
+export const addWordEndingPlural = (word: string, count: number) => {
 	if ([11, 12, 13, 14].includes(count)) {
 		return `${word.slice(0, -1)}ей`;
 	} 

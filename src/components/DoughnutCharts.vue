@@ -1,8 +1,9 @@
 <script setup>
 	import {reactive, inject, watch} from "vue";
 	import DoughnutChartsItem from "@/components/DoughnutChartsItem.vue";
-	import {useFetch} from "@/composables/fetch.js";
-	import {api} from "@/globals.js";
+	import {useFetch} from "@/composables/fetch";
+	import {api} from "@/globals";
+
 
 	const params = (val1, val2) => ({
 		"age[from]": val1,
@@ -38,14 +39,18 @@
 <style scoped lang="scss">
 	@import "@/assets/styles/mixins.scss";
 
+
 	.charts {
-		align-items: center;
 		@include secondary-layout;
+
+		align-items: center;
 		flex: 0 0 15.5vw;
+
 		min-width: 0px;
 
 		&__title {
 			@include subtitle;
+			
 			max-width: 10.42vw;
 			text-align: center;
 		}

@@ -1,9 +1,10 @@
 import {nextTick, ref} from "vue";
 import {Chart} from "chart.js/auto";
-import {getPastDate, getFormattedDate} from "@/helpers/date.js";
-import {createGradient} from "@/plugins/chartsGradient.js";
-import {createArrayFromObject} from "@/helpers/global.js";
-import {onFormatDay} from "@/helpers/formatter.js";
+import {getFormattedDate, getPastDate} from "@/helpers/date";
+import {createGradient} from "@/plugins/chartsGradient";
+import {createArrayFromObject} from "@/helpers/global";
+import {onFormatDay} from "@/helpers/formatters";
+
 
 export const useCharts = (currentWeek, previousWeek, config, canvasRef, type) => {
 	const weekData = ref([]);
@@ -46,13 +47,13 @@ export const useCharts = (currentWeek, previousWeek, config, canvasRef, type) =>
 			previousWeekDate, 
 			date, 
 			day
-		] = Object.keys(weekData.value[0]).map(item => createArrayFromObject(weekData, item));
+		] = Object.keys(weekData.value[0]).map(item => createArrayFromObject(weekData.value, item));
 
 		const chart = new Chart(canvasRef.value.getContext("2d"), config(data, previousData, date, day, previousWeekDate));
 
 		if (type !== "users") {
-			const topCanvasPoint = canvasRef.value.getBoundingClientRect().top;			
-			chart.data.datasets[0].backgroundColor = createGradient(canvasRef.value, topCanvasPoint);
+			const topCanvasPoint = canvasRef.value.getBoundingClientRect().top;
+			chart.data.datasets[0].backgroundColor = createGradient(canvasRef.value.getContext("2d"), topCanvasPoint);
 			chart.update();
 		}
 

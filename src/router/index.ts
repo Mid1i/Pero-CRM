@@ -2,6 +2,14 @@ import {createRouter, createWebHistory} from "vue-router";
 import {nextTick} from "vue";
 
 
+declare module "vue-router" {
+	interface RouteMeta {
+		title: string,
+		headerTitle: String
+	}
+}
+
+
 const routes = [
 	{
 		path: "/",

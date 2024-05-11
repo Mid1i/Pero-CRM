@@ -1,5 +1,5 @@
-import {onFormatPrice, onFormatUserDate} from "@/helpers/formatter.js";
-import {addWordEnding, addWordEndingPlural} from "@/helpers/endings.js";
+import {addWordEnding, addWordEndingPlural} from "@/helpers/endings"
+import {onFormatPrice, onFormatUserDate} from "@/helpers/formatters"
 
 export const revenueAxisCallback = (value, index, array) => {
 	if (Number(String(Math.max(...array))[0]) % 2 === 1) {

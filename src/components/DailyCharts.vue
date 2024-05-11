@@ -1,6 +1,7 @@
 <script setup>
-	import {revenueChartConfig, usersChartConfig} from "@/plugins/charts.js";
+	import {revenueChartConfig, usersChartConfig} from "@/plugins/charts";
 	import DailyChartsItem from "@/components/DailyChartsItem.vue";
+
 
 	const props = defineProps({
 		orders: Object,
@@ -32,6 +33,7 @@
 		display: flex;
 		gap: 2.6vw;
 		justify-content: space-between;
+		
 		margin-bottom: 2.6vw;
 	}
 </style>

@@ -1,6 +1,6 @@
-import { router } from "@/router/index.js";
-import { createApp } from "vue";
 import "@/assets/styles/base.scss";
+import {router} from "@/router/index";
+import {createApp} from "vue";
 import App from "./App.vue";
 
 const Vue = createApp(App);

@@ -1,12 +1,12 @@
 <script setup>
 	import {reactive, computed, provide} from "vue";
-	import BestSellingProducts from "@/components/BestSellingProducts.vue";
-	import {useTwoWeeksData} from "@/composables/separateTwoWeeksData.js";
-	import MostActiveUsers from "@/components/MostActiveUsers.vue";
+	import {useTwoWeeksData} from "@/composables/separateTwoWeeksData";
 	import DoughnutCharts from "@/components/DoughnutCharts.vue";
+	import TopProducts from "@/components/TopProducts.vue";
+	import ActiveUsers from "@/components/ActiveUsers.vue";
 	import DailyCharts from "@/components/DailyCharts.vue";
 	import Widgets from "@/components/Widgets.vue";
-	import {api} from "@/globals.js";
+	import {api} from "@/globals";
 
 
 	const users = reactive(useTwoWeeksData(api.users, "date_of_registration"));
@@ -23,9 +23,9 @@
 	<DailyCharts :users="users" :orders="orders"/>
 	<div class="content__row">
 		<DoughnutCharts/>
-		<BestSellingProducts :orders="orders.currentWeek"/>
-		<MostActiveUsers :orders="orders.currentWeek"/>
-	</div> 
+		<TopProducts :orders="orders.currentWeek"/>
+		<ActiveUsers :orders="orders.currentWeek"/>
+	</div>
 </template>
 
 
@@ -33,7 +33,6 @@
 	.content__row {
 		align-items: stretch;
 		display: flex;
-		justify-content: space-between;
 		gap: 2.6vw;
 	}
 </style>

@@ -1,19 +1,20 @@
 <script setup>
 	import TheSidebarItem from "@/components/TheSidebarItem.vue";
-	import {sidebarItems} from "@/globals.js";
+	import {sidebarItems} from "@/globals";
 	import {ref} from "vue";
 
-	const menuSize = ref(localStorage.getItem("menuSize") || "big")
+
+	const menuSize = ref(localStorage.getItem("menuSize") || "big");
 
 	const onMenuResize = () => {
 		const sizes = {
 			big: "small",
 			small: "big",
-		}
+		};
 		
-		menuSize.value = sizes[menuSize.value]
-		localStorage.setItem("menuSize", menuSize.value)
-	}
+		menuSize.value = sizes[menuSize.value];
+		localStorage.setItem("menuSize", menuSize.value);
+	};
 </script>
 
 <template>
@@ -70,46 +71,59 @@
 	@import "@/assets/styles/variables.scss";
 	@import "@/assets/styles/mixins.scss";
 
+
 	.aside-bar {
 		background: $--secondary-back;
+		
 		display: flex;
 		flex-direction: column;
+
 		position: sticky;
 		left: 0px;
 		top: 0px;
+
 		transition: all 0.2s linear;
 		height: 100vh;
 		width: 13.8vw;
 
 		&__row {
-			align-items: center;
 			border-bottom: 0.05vw solid $--secondary-text;
+			
+			align-items: center;
 			display: flex;
-			padding: 1.04vw;
-			overflow: hidden;
+			
 			position: relative;
+			overflow: hidden;
+			
+			padding: 1.04vw;
 		}
 
 		&__wrapper {
 			flex: 0 0 auto;
+
 			margin-right: 0.52vw;
+
 			height: 2.08vw;
 			width: 2.08vw;
 		}
 
 		&__title {
 			@include title;
+
 			transition: all 0.2s linear;
 			text-transform: uppercase;
 		}
 
 		&__arrow {
-			align-items: center;
 			cursor: pointer;
+
+			align-items: center;
 			display: flex;
 			flex: 0 0 auto;
 			justify-content: center;
+
 			margin-left: auto;
+
 			transition: all 0.2s linear;
 			height: 1.25vw;
 			width: 1.25vw;
@@ -128,13 +142,16 @@
 			display: flex;
 			flex-direction: column;
 			gap: 0.52vw;
+
 			padding: 1.04vw 2.08vw;
 
 			&-category {
 				color: $--primary-text;
 				font-size: 0.63vw;
 				font-weight: 500;
+
 				padding-left: 0.52vw;
+
 				transition: all 0.2s linear;
 				text-transform: uppercase;
 			}
@@ -143,6 +160,7 @@
 				display: flex;
 				flex-direction: column;
 				gap: 0.52vw;
+				
 				margin-bottom: 1.56vw;
 			}
 		}

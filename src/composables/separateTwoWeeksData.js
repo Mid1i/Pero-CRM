@@ -1,6 +1,6 @@
 import {ref, watch} from "vue";
-import {getPastDate, getCurrentDate} from "@/helpers/date.js";
-import {useFetch} from "@/composables/fetch.js";
+import {getPastDate, getCurrentDate} from "@/helpers/date";
+import {useFetch} from "@/composables/fetch";
 
 
 export const useTwoWeeksData = (url, dateType) => {

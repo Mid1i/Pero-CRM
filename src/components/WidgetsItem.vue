@@ -1,7 +1,8 @@
 <script setup>
-	import {inject, computed} from "vue";
-	import {onFormatPrice} from "@/helpers/formatter.js";
+	import {inject} from "vue";
+	import {onFormatPrice} from "@/helpers/formatters";
 
+	
 	const props = defineProps({
 		title: String,
 		status: String,
@@ -19,11 +20,7 @@
 
 		const difference = Number((((props.currentAmount - props.previousAmount) / props.previousAmount) * 100).toFixed(2));
 
-		if (props.previousAmount > props.currentAmount) {
-			return `${difference}%`;
-		} else {
-			return `+${difference}%`;
-		}
+		return props.previousAmount > props.currentAmount ? `${difference}%` : `+${difference}%`;
 	};
 </script>
 
@@ -52,6 +49,7 @@
 	@import "@/assets/styles/variables.scss";
 	@import "@/assets/styles/mixins.scss";
 
+
 	.widget {
 		@include secondary-layout;
 		position: relative;
@@ -68,6 +66,7 @@
 
 			&.loading {
 				@include skeleton;
+
 				height: 3.2vw;
 				width: 12vw;
 			}
@@ -80,9 +79,11 @@
 
 		&__comparison {
 			border-radius: 0.52vw;
+
 			color: $--secondary-text;
 			font-size: 0.73vw;
 			font-weight: 700;
+
 			padding: 0.26vw 0.52vw;
 
 			&.increase {
@@ -105,6 +106,7 @@
 			position: absolute;
 			bottom: 1.3vw;
 			right: 2.6vw;
+			
 			height: 3.9vw;
 			width: 2.6vw;
 

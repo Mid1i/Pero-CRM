@@ -1,7 +1,8 @@
 <script setup>
 	import {ref, nextTick, watch, computed} from "vue";
 	import {Chart} from "chart.js/auto";
-	import {doughnutChartConfig} from "@/plugins/charts.js";
+	import {doughnutChartConfig} from "@/plugins/charts";
+
 
 	const props = defineProps({
 		data: Array,
@@ -43,6 +44,7 @@
 <style scoped lang="scss">
 	@import "@/assets/styles/mixins.scss";
 
+
 	.chart__section {
 		height: 10.4vw;
 		width: 10.4vw;
@@ -60,14 +62,17 @@
 
 		&-item {
 			@include table-text;
+
 			align-items: center;
 			display: flex;
-			font-weight: 500;
 			gap: 0.46vw;
+
+			font-weight: 500;
 		}
 
 		&-color {
 			border-radius: 100%;
+			
 			height: 0.83vw;
 			width: 0.83vw;
 		}

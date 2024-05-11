@@ -1,6 +1,7 @@
 <script setup>
 	import {RouterLink, useRouter} from "vue-router";
 	
+
 	defineProps({
 		title: String,
 		iconURL: String,
@@ -27,16 +28,20 @@
 	@import "@/assets/styles/variables.scss";
 	@import "@/assets/styles/mixins.scss"; 
 
+
 	.item {
 		width: 100%;
 
 		&__link {
-			align-items: center;
 			border-radius: 0.52vw;
+
+			align-items: center;
 			display: flex;
 			gap: 10px;
+
 			padding: 0.42vw 0.52vw;
 			overflow: hidden;
+			
 			transition: all 0.2s linear;
 			width: 100%;
 
@@ -47,6 +52,7 @@
 
 		&__wrapper {
 			flex: 0 0 auto;
+			
 			height: 1.25vw;
 			width: 1.25vw;
 		}

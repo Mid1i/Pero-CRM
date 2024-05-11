@@ -1,6 +1,7 @@
 <script setup>
 	import {useRouter} from "vue-router";
 
+
 	const router = useRouter();
 </script>
 
@@ -34,6 +35,7 @@
 		align-items: center;
 		display: flex;	
 		justify-content: space-between;
+
 		padding-bottom: 1.56vw;
 
 		&__title {
@@ -48,13 +50,16 @@
 
 		&__button {
 			@include subtitle;
+
 			align-items: center;
+			display: flex;
+			gap: 0.52vw;
+
 			background: transparent;
 			border: 0.05vw solid $--secondary-text;
 			border-radius: 0.52vw;
 			color: $--primary-text;
-			display: flex;
-			gap: 0.52vw;
+			
 			padding: 0.52vw 1.3vw;
 			margin-right: 1.56vw;
 		}
@@ -70,11 +75,13 @@
 		}
 
 		&__account {
-			align-items: center;
 			border-left: 0.05vw solid $--secondary-text;
 			cursor: pointer;
+
+			align-items: center;
 			display: flex;
 			gap: 0.52vw;
+			
 			padding-left: 1.04vw;
 		}
 
