@@ -12,8 +12,8 @@
 	const users = reactive(useTwoWeeksData(api.users, "date_of_registration"));
 	const orders = reactive(useTwoWeeksData(api.orders, "date_of_creating"));
 
-	const checkStatus = computed(() => users.status === "success" && orders.status === "success");
-
+	const checkStatus = computed(() => !users.loadingWeekData && !orders.loadingWeekData);
+	
 	provide("statusFunc", checkStatus);
 </script>
 

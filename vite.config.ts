@@ -14,6 +14,7 @@ export default defineConfig({
       "@/layouts": '/src/layouts',
       "@/plugins": '/src/plugins',
       "@/router": '/src/router',
+      "@/types": '/src/types',
       "@/views": '/src/views'
     }
   }

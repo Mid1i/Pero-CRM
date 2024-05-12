@@ -4,7 +4,7 @@ import {createArrayFromObject} from "@/helpers/global";
 
 
 export const useFindTopItemsAndUsers = (orders, status, url, type) => {
-	const topItemsApi = reactive({});
+	const topItemsAPI = reactive({});
 	const loading = ref(true);
 	const topItems = ref([]);
 
@@ -15,7 +15,7 @@ export const useFindTopItemsAndUsers = (orders, status, url, type) => {
 
 		if (topItems.value.length > 0) {
 			const params = topItems.value.reduce((value, item) => value += `id[]=${item.id}&`, "?");
-			Object.assign(topItemsApi, useFetch(`${url}${params.slice(0, -1)}`));
+			Object.assign(topItemsAPI, useFetch(`${url}${params.slice(0, -1)}`));
 		};
 
 		return topItems.value.length;
@@ -32,7 +32,7 @@ export const useFindTopItemsAndUsers = (orders, status, url, type) => {
 			revenue: price
 		};
 
-		topItems.value.push(item);
+		topItems.value = [...topItems.value, item];
 	}
 
 	const editItem = ({id, user_id, count, price}) => {
@@ -59,13 +59,13 @@ export const useFindTopItemsAndUsers = (orders, status, url, type) => {
 	watch(status, () => {
 		if (status.value && getTopItems() > 0) {
 			const params = topItems.value.reduce((value, item) => value += `id[]=${item.id}&`, "?");
-			Object.assign(topItemsApi, useFetch(`${url}${params.slice(0, -1)}`));
+			Object.assign(topItemsAPI, useFetch(`${url}${params.slice(0, -1)}`));
 		}
 	});
 
-	watch(() => topItemsApi.loading, () => {
-		if (topItemsApi.data) {
-			topItems.value = topItems.value.map(item => ({...item, ...topItemsApi.data.find(obj => obj.id === item.id)}));
+	watch(() => topItemsAPI.loading, () => {
+		if (topItemsAPI.data) {
+			topItems.value = topItems.value.map(item => ({...item, ...topItemsAPI.data.find(obj => obj.id === item.id)}));
 			loading.value = false;
 		}
 	});
