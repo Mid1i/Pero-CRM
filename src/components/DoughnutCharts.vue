@@ -10,8 +10,8 @@
 		"age[to]": val2
 	});
 
-	const maleUsers = reactive(useFetch(api.users, {gender: "male"}));
-	const femaleUsers = reactive(useFetch(api.users, {gender: "female"}));
+	const maleUsers = reactive(useFetch(api.users, {gender: true}));
+	const femaleUsers = reactive(useFetch(api.users, {gender: false}));
 
 	const youngUsers = reactive(useFetch(api.users, params(0, 30)));
 	const averageUsers = reactive(useFetch(api.users, params(31, 50)));

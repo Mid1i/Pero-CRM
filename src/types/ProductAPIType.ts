@@ -5,9 +5,7 @@ export interface ProductAPIType {
 	color: string[],
 	brand: string,
 	price: number,
-	gender: "male" | "female",
-	sizes: {
-		[key: string]: number
-	},
+	gender: boolean,
+	sizes: Record<string, number>,
 	status: boolean
 };

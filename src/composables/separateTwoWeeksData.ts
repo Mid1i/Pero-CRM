@@ -1,15 +1,12 @@
 import {ref, watch} from "vue";
 import {getPastDate, getCurrentDate} from "@/helpers/date";
 import {useFetch} from "@/composables/fetch";
-import type {OrderAPIType, UserAPIType, ProductAPIType} from "@/types/index";
+import type {APIData, TwoWeeksData} from "@/types/index";
 
 
-type WeekData = OrderAPIType | UserAPIType | ProductAPIType;
-
-
-export const useTwoWeeksData = (url: string, dateType: string) => {
-	const currentWeek = ref<WeekData[]>([]);
-	const previousWeek = ref<WeekData[]>([]);
+export const useTwoWeeksData = (url: string, dateType: string): TwoWeeksData => {
+	const currentWeek = ref<APIData[]>([]);
+	const previousWeek = ref<APIData[]>([]);
 	const loadingWeekData = ref<boolean>(true);
 
 	const params = {
@@ -19,9 +16,9 @@ export const useTwoWeeksData = (url: string, dateType: string) => {
 
 	const {data, loading} = useFetch(url, params);
 	
-	watch(loading, () => {
-		if (!loading.value && data.value) {
-			data.value.map((item: WeekData) => item[dateType] > getPastDate(7) ? currentWeek.value.push(item) : previousWeek.value.push(item));
+	watch(loading, (): void => {
+		if (data.value) {
+			data.value.map((item: APIData): number => item[dateType] > getPastDate(7) ? currentWeek.value.push(item) : previousWeek.value.push(item));
 			loadingWeekData.value = false;
 		}
 	});

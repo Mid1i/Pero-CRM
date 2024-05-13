@@ -12,3 +12,5 @@ export interface OrderAPIType {
 	user_id: number,
 	date_of_creating: number
 }
+
+export type OrderItem = OrderArrayType | OrderAPIType;

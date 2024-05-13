@@ -1,7 +1,7 @@
 export const onFormatPrice = (value: number) => `${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")} ₽`;
 
 
-export const onFormatDay = (day: number) => {
+export const onFormatDay = (day: number): string => {
 	const days = {
 		0: "Вс",
 		1: "Пн",
@@ -16,4 +16,4 @@ export const onFormatDay = (day: number) => {
 }
 
 
-export const onFormatUserDate = (date: string) => date.split("-").reverse().join(".");
+export const onFormatUserDate = (date: string): string => date.split("-").reverse().join(".");

@@ -1,14 +1,22 @@
+interface SidebarItem {
+	id: number,
+	title: string,
+	iconURL: string,
+	link: string
+}
+
+
 const mainURL = "https://efa01a8820d3e67e.mokky.dev";
 
 
-export const api = {
+export const api: Record<string, string> = {
 	users: `${mainURL}/users`,
 	orders: `${mainURL}/orders`,
 	products: `${mainURL}/products`
 };
 
 
-export const sidebarItems = {
+export const sidebarItems: Record<string, SidebarItem[]> = {
 	categories: [
 		{
 			id: 1,

@@ -1,0 +1,99 @@
+import {type ComputedRef, type Ref, ref, reactive, watch} from "vue";
+import type {OrderAPIType, APIData, OrderArrayType, ProductAPIType, UserAPIType, OrderItem} from "@/types/index";
+import {useFetch} from "@/composables/fetch";
+import {createArrayFromObject} from "@/helpers/global";
+import {api} from "../globals";
+
+
+interface TopItem extends Partial<ProductAPIType>, Partial<UserAPIType> {
+	id: number,
+	count: number,
+	revenue: number
+};
+
+interface TopItemsAPI {
+	data: APIData[],
+	loading: boolean
+};
+
+interface TopItemsFunc {
+	topItems: Ref<TopItem[]>, 
+	loading: Ref<boolean>
+}
+
+
+export const useFindTopItemsAndUsers = (orders: OrderAPIType[], status: ComputedRef<boolean>, url: string): TopItemsFunc => {
+	const topItemsAPI = reactive<TopItemsAPI | Record<any, never>>({});
+	const loading = ref<boolean>(true);
+	const topItems = ref<TopItem[]>([]);
+
+
+	const fillTopItems = (): number => {
+		if (url === api.products) {
+			createArrayFromObject(orders, "order").map((order: OrderArrayType[]): void[] => order.map(getItem));
+		} else {
+			orders.map(getItem);
+		}
+		
+		sortTopItems();
+		return topItems.value.length;
+	}
+
+	const getItem = (item: OrderItem): void => findItem(getIDByType(item)) ? updateItem(item) : addItem(item);
+
+	const findItem = (id: number): TopItem | undefined => topItems.value.find((item) => item.id === id);
+
+	const addItem = (item: OrderItem): void => {
+		const newItem = {
+			id: getIDByType(item), 
+			count: getNumberByType(item, "count"), 
+			revenue: getNumberByType(item, "price")
+		};
+
+		topItems.value = [...topItems.value, newItem];
+	}
+
+	const updateItem = (item: OrderItem): void => {
+		const currentItem = findItem(getIDByType(item)) as TopItem;
+		const index = topItems.value.indexOf(currentItem);
+
+		topItems.value[index] = {
+			...currentItem, 
+			count: currentItem.count + getNumberByType(item, "count"), 
+			revenue: currentItem.revenue + getNumberByType(item, "price")
+		};
+	}
+
+	const sortTopItems = (): void => {
+		topItems.value.sort((val1: TopItem, val2: TopItem): number => {
+			if (val1.count < val2.count) return 1;
+			if (val1.count > val2.count) return -1;
+			if (val1.revenue < val2.revenue) return 1;
+			if (val1.revenue > val2.revenue) return -1;
+			return 0;
+		});
+	}
+
+
+	const getIDByType = (item: OrderItem): number => "user_id" in item ? item.user_id : item.id;
+
+	const getNumberByType = (item: OrderItem, property: string): number => property in item ? item[property] : 1;
+
+
+	watch(status, (): void => {
+		if (status.value && fillTopItems() > 0) {
+			const params = topItems.value.reduce((value: string, item: TopItem): string => value += `id[]=${item.id}&`, "?");
+			Object.assign(topItemsAPI, useFetch(`${url}${params.slice(0, -1)}`));
+		}
+	});
+
+	
+	watch(() => topItemsAPI.loading, (): void => {
+		if (topItemsAPI.data) {
+			topItems.value = topItems.value.map((item: TopItem): TopItem => ({...item, ...topItemsAPI.data.find(obj => obj.id === item.id)}));
+			loading.value = false;
+		}
+	});
+
+	return {topItems, loading};
+}
