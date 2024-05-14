@@ -1,12 +1,12 @@
-<script setup>
+<script setup lang="ts">
 	import {RouterLink, useRouter} from "vue-router";
 	
 
-	defineProps({
-		title: String,
-		iconURL: String,
-		link: String
-	});
+	defineProps<{
+		title: string,
+		iconURL: string,
+		link: string
+	}>();
 
 	const router = useRouter();
 </script>

@@ -1,24 +1,22 @@
-<script setup>
-	import {ref, inject, onUpdated} from "vue";
+<script setup lang="ts">
+	import {type ComputedRef, ref, inject, onUpdated} from "vue";
+	import type {OrderAPIType, UserAPIType} from "@/types/index";
 	import {useCharts} from "@/composables/charts";
 
 
-	const props = defineProps({
+	const props = defineProps<{
 		config: Function,
-		currentWeek: Array,
-		previousWeek: Array,
-		error: String,
-		title: String,
-		type: String
-	});
+		currentWeek: UserAPIType[] | OrderAPIType[],
+		previousWeek: UserAPIType[] | OrderAPIType[],
+		title: string,
+		type: string
+	}>();
 
-	const canvasRef = ref(null);
+	const canvasRef = ref<HTMLCanvasElement | null>(null);
 
-	const checkStatus = inject("statusFunc");
+	const isLoading = inject("isLoading") as ComputedRef<boolean>;
 	
-	onUpdated(() => {
-		if (canvasRef.value) useCharts(props.currentWeek, props.previousWeek, props.config, canvasRef, props.type);
-	})
+	onUpdated((): void => useCharts(props.currentWeek, props.previousWeek, props.config, canvasRef, props.type));
 </script>
 
 
@@ -31,8 +29,8 @@
 				<span class="chart__right-text">Прошлая неделя</span>
 			</div>
 		</div>
-		<div :class="['chart__section', {loading: !checkStatus}]">
-			<canvas v-if="checkStatus" ref="canvasRef"></canvas>
+		<div :class="['chart__section', {loading: isLoading}]">
+			<canvas v-if="!isLoading" ref="canvasRef"></canvas>
 		</div>
 	</div>
 </template>

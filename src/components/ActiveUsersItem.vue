@@ -1,14 +1,14 @@
-<script setup>
+<script setup lang="ts">
 	import {onFormatPrice} from "@/helpers/formatters";
 
 
-	const props = defineProps({
-		index: Number,
-		name: String,
-		surname: String,
-		count: Number,
-		revenue: Number
-	});
+	defineProps<{
+		index: number,
+		name?: string,
+		surname?: string,
+		count?: number,
+		revenue?: number
+	}>();
 </script>
 
 

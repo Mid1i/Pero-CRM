@@ -1,6 +1,6 @@
 import {ref, type Ref} from "vue";
-import axios from "axios";
 import type {APIData} from "@/types/index";
+import axios from "axios";
 
 
 interface fetchData {
@@ -9,7 +9,7 @@ interface fetchData {
 };
 
 
-export const useFetch = (url: string, params: Record<string, string | number> = {}): fetchData => {
+export const useFetch = (url: string, params: Record<string, any> = {}): fetchData => {
 	const loading = ref<boolean>(true);
 	const data = ref<APIData[] | null>(null);
 

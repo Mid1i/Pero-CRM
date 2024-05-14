@@ -1,31 +1,34 @@
-<script setup>
-	import {ref, nextTick, watch, computed} from "vue";
-	import {Chart} from "chart.js/auto";
+<script setup lang="ts">
+	import {ref, watch, computed} from "vue";
+	import {Chart, ChartConfiguration} from "chart.js/auto";
+	import type {APIData} from "@/types/index";
 	import {doughnutChartConfig} from "@/plugins/charts";
 
 
-	const props = defineProps({
-		data: Array,
-		colors: Array,
-		labels: Array
-	});
+	type Data = APIData[] | null;
 
-	const canvasRef = ref(null);
 
-	const checkStatus = computed(() => props.data.every(item => item));
+	const props = defineProps<{
+		data: Data[],
+		colors: string[],
+		labels: string[]
+	}>();
 
-	watch(checkStatus, () => {
-		if (checkStatus.value) {
-			nextTick(
-				() => new Chart(canvasRef.value.getContext("2d"), doughnutChartConfig(props.data.map(item => item.length), props.labels, props.colors))
-			);
+	const canvasRef = ref<HTMLCanvasElement | null>(null);
+
+	const isReady = computed<boolean>(() => props.data.every((item: Data): Data => item));
+
+	watch(isReady, () => {
+		if (isReady.value && canvasRef.value) {
+			const config = doughnutChartConfig(props.data.map(item => item?.length), props.labels, props.colors) as ChartConfiguration;
+			new Chart(canvasRef.value, config);
 		}
 	});
 </script>
 
 
 <template>
-	<div :class="['chart__section', {loading: !checkStatus}]">
+	<div :class="['chart__section', {loading: !isReady}]">
 		<canvas ref="canvasRef"></canvas>
 	</div>
 	<ul class="chart__labels">

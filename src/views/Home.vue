@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import {reactive, computed, provide} from "vue";
 	import type {OrderAPIType} from "@/types/index";
-	import {useTwoWeeksData} from "@/composables/separateTwoWeeksData";
+	import {useSeparateData} from "@/composables/separateWeeksData";
 	import DoughnutCharts from "@/components/DoughnutCharts.vue";
 	import TopProducts from "@/components/TopProducts.vue";
 	import ActiveUsers from "@/components/ActiveUsers.vue";
@@ -10,12 +10,12 @@
 	import {api} from "../globals";
 
 
-	const users = reactive(useTwoWeeksData(api.users, "date_of_registration"));
-	const orders = reactive(useTwoWeeksData(api.orders, "date_of_creating"));
+	const users = reactive(useSeparateData(api.users, "date_of_registration"));
+	const orders = reactive(useSeparateData(api.orders, "date_of_creating"));
 
-	const checkStatus = computed((): boolean => !users.loadingWeekData && !orders.loadingWeekData);
+	const isLoading = computed((): boolean => users.loading || orders.loading);
 	
-	provide("statusFunc", checkStatus);
+	provide("isLoading", isLoading);
 </script>
 
 

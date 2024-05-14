@@ -1,12 +1,12 @@
-<script setup>
-	import TheSidebarItem from "@/components/TheSidebarItem.vue";
-	import {sidebarItems} from "@/globals";
+<script setup lang="ts">
 	import {ref} from "vue";
+	import TheSidebarItem from "@/components/TheSidebarItem.vue";
+	import {sidebarItems} from "../globals";
 
 
-	const menuSize = ref(localStorage.getItem("menuSize") || "big");
+	const menuSize = ref<string>(localStorage.getItem("menuSize") || "big");
 
-	const onMenuResize = () => {
+	const onMenuResize = (): void => {
 		const sizes = {
 			big: "small",
 			small: "big",

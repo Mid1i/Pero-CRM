@@ -1,18 +1,18 @@
-<script setup>
-	import {inject, computed, watch} from "vue";
+<script setup lang="ts">
+	import {type ComputedRef, inject} from "vue";
+	import type {OrderAPIType} from "@/types/index";
 	import {useFindTopItemsAndUsers} from "@/composables/topItemsAndUsers";
 	import TopProductsItem from "@/components/TopProductsItem.vue";
-	import {createArrayFromObject} from "@/helpers/global";
-	import {api} from "@/globals";
+	import {api} from "../globals";
 
 
-	const props = defineProps({
-		orders: Array
-	});
+	const props = defineProps<{
+		orders: OrderAPIType[]
+	}>();
 
-	const checkStatus = inject("statusFunc");
+	const isLoading = inject("isLoading") as ComputedRef<boolean>;
 
-	const {topItems, loading} = useFindTopItemsAndUsers(props.orders, checkStatus, api.products, "products");
+	const {topItems, loading} = useFindTopItemsAndUsers(props.orders, isLoading, api.products);
 </script>
 
 
@@ -23,8 +23,8 @@
 			<TopProductsItem
 				v-for="(product, index) in topItems.slice(0, 8)"
 				:index="index + 1"
-				:product="product"
 				:key="index"
+				:="product"
 			/>
 		</ul>
 		<ul v-else class="products__list">

@@ -16,14 +16,10 @@ export const revenueAxisCallback = (value, index, array) => {
 export const revenueTooltipCallbacks = (weekDates, ordersAmount) => ({
 	title: (context) => onFormatUserDate(weekDates[context[0].dataIndex]),
 	label: (context) => onFormatPrice(context.formattedValue),
-	footer: (context) =>
-		`${ordersAmount[context[0].dataIndex]} ${addWordEnding(
-			"заказ",
-			ordersAmount[context[0].dataIndex]
-		)}`,
+	footer: (context) => `${ordersAmount[context[0].dataIndex]} ${addWordEnding("заказ", ordersAmount[context[0].dataIndex])}`,
 })
 
-export const usersAxisCallback = value => {
+export const usersAxisCallback = (value) => {
 	if (Number.isInteger(value)) {
 		return value;
 	}

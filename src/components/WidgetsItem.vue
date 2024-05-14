@@ -1,26 +1,25 @@
-<script setup>
-	import {inject} from "vue";
+<script setup lang="ts">
 	import {onFormatPrice} from "@/helpers/formatters";
 
 	
-	const props = defineProps({
-		title: String,
-		status: String,
-		currentAmount: Number,
-		previousAmount: Number,
-		iconURL: String,
-	});
-
-	const checkStatus = inject("statusFunc");
+	const props = defineProps<{
+		title: string,
+		currentAmount: number,
+		previousAmount: number,
+		iconURL: string,
+		loading: boolean
+	}>();
 	
-	const compareAmounts = () => {
-		if (props.previousAmount === 0) {
-			return "+100%";
+	const compareAmounts = (): string | undefined => {
+		if (props.currentAmount !== undefined && props.previousAmount !== undefined) {
+			if (props.previousAmount === 0) {
+				return "+100%";
+			}
+	
+			const difference = Number((((props.currentAmount - props.previousAmount) / props.previousAmount) * 100).toFixed(2));
+	
+			return props.previousAmount > props.currentAmount ? `${difference}%` : `+${difference}%`;
 		}
-
-		const difference = Number((((props.currentAmount - props.previousAmount) / props.previousAmount) * 100).toFixed(2));
-
-		return props.previousAmount > props.currentAmount ? `${difference}%` : `+${difference}%`;
 	};
 </script>
 
@@ -28,13 +27,13 @@
 <template>
 	<section class="content__widgets-item widget">
 		<h3 class="widget__title">{{ title }}</h3>
-		<div v-if="checkStatus" class="widget__row">
+		<div v-if="!loading" class="widget__row">
 			<span class="widget__amount">{{ title === "Общая выручка" ? onFormatPrice(currentAmount) : currentAmount }}</span>
-			<span :class="['widget__comparison',  props.previousAmount <= props.currentAmount ? 'increase' : 'decrease']">{{ compareAmounts() }}</span>
+			<span :class="['widget__comparison',  previousAmount <= currentAmount ? 'increase' : 'decrease']">{{ compareAmounts() }}</span>
 		</div>
 		<div v-else class="widget__row loading"></div>
 		<p class="widget__text">По сравнению с предыдущей неделей</p>
-		<div :class="['widget__icon', {bigger: props.iconURL !== 'visitors.svg'}]">
+		<div :class="['widget__icon', {bigger: iconURL !== 'visitors.svg'}]">
 			<img
 				:alt="title"
 				class="widget__image image"

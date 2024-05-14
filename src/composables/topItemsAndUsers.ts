@@ -1,7 +1,7 @@
 import {type ComputedRef, type Ref, ref, reactive, watch} from "vue";
 import type {OrderAPIType, APIData, OrderArrayType, ProductAPIType, UserAPIType, OrderItem} from "@/types/index";
-import {useFetch} from "@/composables/fetch";
 import {createArrayFromObject} from "@/helpers/global";
+import {useFetch} from "@/composables/fetch";
 import {api} from "../globals";
 
 
@@ -81,7 +81,7 @@ export const useFindTopItemsAndUsers = (orders: OrderAPIType[], status: Computed
 
 
 	watch(status, (): void => {
-		if (status.value && fillTopItems() > 0) {
+		if (!status.value && fillTopItems() > 0) {
 			const params = topItems.value.reduce((value: string, item: TopItem): string => value += `id[]=${item.id}&`, "?");
 			Object.assign(topItemsAPI, useFetch(`${url}${params.slice(0, -1)}`));
 		}

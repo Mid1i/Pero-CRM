@@ -1,8 +1,8 @@
 <script setup lang="ts">
 	import {type ComputedRef, inject} from "vue";
+	import type {OrderAPIType} from "@/types/index";
 	import {useFindTopItemsAndUsers} from "@/composables/topItemsAndUsers";
 	import ActiveUsersItem from "@/components/ActiveUsersItem.vue";
-	import type {OrderAPIType, UserAPIType} from "@/types/index";
 	import {api} from "../globals";
 
 
@@ -10,9 +10,9 @@
 		orders: OrderAPIType[]
 	}>();
 
-	const checkStatus = inject<ComputedRef<boolean>>("statusFunc");
+	const isLoading = inject("isLoading") as ComputedRef<boolean>;
 
-	const {topItems, loading} = useFindTopItemsAndUsers(props.orders, checkStatus, api.users);
+	const {topItems, loading} = useFindTopItemsAndUsers(props.orders, isLoading, api.users);
 </script>
 
 
@@ -24,7 +24,7 @@
 				v-for="(user, index) in topItems.slice(0, 5)"
 				:index="index + 1"
 				:key="index"
-				:="user as UserAPIType[]"
+				:="user"
 			/>
 		</ul>
 		<ul v-else class="users__list">

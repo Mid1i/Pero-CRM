@@ -1,38 +1,42 @@
-<script setup>
+<script setup lang="ts">
 	import {onFormatPrice} from "@/helpers/formatters";
 
 
-	const props = defineProps({
-		index: Number,
-		product: Object
-	});
+	defineProps<{
+		id?: number,
+		index: number,
+		name?: string,
+		src?: string,
+		count?: number,
+		price?: number
+	}>();
 </script>
 
 
 <template>
 	<li class="products__list-el product">
 		<span class="product__number">{{ index }}</span>
-		<div v-if="product" class="product__right">
+		<div v-if="price && count" class="product__right">
 			<div class="product__wrapper">
 				<img 
-					:alt="product.name"
+					:alt="name"
 					class="image"
-					:src="`/src/assets/images/Products/${product.imgURL}`"
+					:src="`/src/assets/images/Products/${src}`"
 				>
 			</div>
 			<div class="product__information">
-				<h6 class="product__title">{{ product.name }}</h6>
+				<h6 class="product__title">{{ name }}</h6>
 				<span class="product__text">
 					Арт.
-					<span>{{ product.id }}</span>
+					<span>{{ id }}</span>
 				</span>
 				<span class="product__text">
 					Продано:
-					<span>{{ product.count }}</span>
+					<span>{{ count }}</span>
 				</span>
 				<span class="product__text">
 					Общая выручка:
-					<span>{{ onFormatPrice(product.price * product.count) }}</span>
+					<span>{{ onFormatPrice(price * count) }}</span>
 				</span>
 			</div>
 		</div>

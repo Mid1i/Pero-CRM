@@ -1,11 +1,11 @@
-<script setup>
-	import {reactive, inject, watch} from "vue";
+<script setup lang="ts">
+	import {reactive} from "vue";
 	import DoughnutChartsItem from "@/components/DoughnutChartsItem.vue";
 	import {useFetch} from "@/composables/fetch";
-	import {api} from "@/globals";
+	import {api} from "../globals";
 
 
-	const params = (val1, val2) => ({
+	const params = (val1: number, val2: number): Record<string, number> => ({
 		"age[from]": val1,
 		"age[to]": val2
 	});
