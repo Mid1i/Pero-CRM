@@ -1,15 +1,9 @@
-import {ref, type Ref} from "vue";
-import type {APIData} from "@/types/index";
+import {ref} from "vue";
 import axios from "axios";
+import type {APIData, FetchData} from "@/types/index";
 
 
-interface fetchData {
-	data: Ref<APIData[] | null>,
-	loading: Ref<boolean>
-};
-
-
-export const useFetch = (url: string, params: Record<string, any> = {}): fetchData => {
+export const useFetch = (url: string, params: Record<string, any> = {}): FetchData => {
 	const loading = ref<boolean>(true);
 	const data = ref<APIData[] | null>(null);
 

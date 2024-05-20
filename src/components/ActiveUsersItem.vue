@@ -5,7 +5,6 @@
 	defineProps<{
 		index: number,
 		name?: string,
-		surname?: string,
 		count?: number,
 		revenue?: number
 	}>();
@@ -16,7 +15,7 @@
 	<li class="users__list-el user">
 		<span class="user__number">{{ index }}</span>
 		<div v-if="name && count && revenue" class="user__right">
-			<span class="user__title">{{ `${surname} ${name}` }}</span>
+			<span class="user__title">{{ name }}</span>
 			<span class="user__text">
 				Всего заказов: 
 				<span>{{ count }}</span>

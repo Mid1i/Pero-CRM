@@ -15,10 +15,10 @@ interface WeekData {
 	previousWeekDate: string,
 	date: string,
 	day: string
-}
+};
 
 
-export const useCharts = (currentWeek: WeekParams[], previousWeek: WeekParams[], config: Function, canvasRef: Ref<HTMLCanvasElement | null>, type: string) => {
+export const useCharts = (currentWeek: WeekParams[], previousWeek: WeekParams[], config: Function, canvasRef: Ref<HTMLCanvasElement | null>, type: string): void => {
 	const weekData = ref<WeekData[]>([]);
 
 

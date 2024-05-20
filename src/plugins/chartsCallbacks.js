@@ -2,7 +2,7 @@ import {addWordEnding, addWordEndingPlural} from "@/helpers/endings"
 import {onFormatPrice, onFormatUserDate} from "@/helpers/formatters"
 
 export const revenueAxisCallback = (value, index, array) => {
-	if (Number(String(Math.max(...array))[0]) % 2 === 1) {
+	if (Math.max(...array) % 2 === 1) {
 		if (index % 2 === 0) {
 			return onFormatPrice(value);
 		}

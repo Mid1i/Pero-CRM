@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 	import TheSidebar from "@/components/TheSidebar.vue";
 	import TheHeader from "@/components/TheHeader.vue";
 </script>
