@@ -4,7 +4,7 @@ export interface UserAPIType {
 	age: number,
 	gender: boolean,
 	orders: number[],
-	status: "admin" | "banned" | "consumer",
+	status: string,
 	email: string,
 	phone: number,
 	date_of_registration: number

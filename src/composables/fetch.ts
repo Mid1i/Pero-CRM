@@ -1,6 +1,6 @@
-import {ref} from "vue";
+import { ref } from "vue";
 import axios from "axios";
-import type {APIData, FetchData} from "@/types/index";
+import type { APIData, FetchData } from "@/types/index";
 
 
 export const useFetch = (url: string, params: Record<string, any> = {}): FetchData => {
@@ -11,8 +11,8 @@ export const useFetch = (url: string, params: Record<string, any> = {}): FetchDa
 		try {
 			const response = await axios.get<APIData[]>(url, {params});
 			data.value = response.data;
-		} catch (err) {
-			console.error(err);
+		} catch (error: any) {
+			console.error(error);
 		} finally {
 			loading.value = false;
 		}

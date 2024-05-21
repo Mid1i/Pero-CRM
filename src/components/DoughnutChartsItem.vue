@@ -1,8 +1,8 @@
 <script setup lang="ts">
-	import {ref, watch, computed} from "vue";
-	import {Chart, ChartConfiguration} from "chart.js/auto";
-	import type {APIData} from "@/types/index";
-	import {doughnutChartConfig} from "@/plugins/charts";
+	import { ref, watch, computed } from "vue";
+	import { Chart, ChartConfiguration } from "chart.js/auto";
+	import type { APIData } from "@/types/index";
+	import { doughnutChartConfig } from "@/plugins/charts";
 
 
 	type Data = APIData[] | null;

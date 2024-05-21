@@ -1,15 +1,17 @@
-import {type ComputedRef, type Ref, ref, reactive, watch} from "vue";
-import type {OrderAPIType, APIData, OrderArrayType, ProductAPIType, UserAPIType, OrderItem} from "@/types/index";
-import {createArrayFromObject} from "@/helpers/global";
-import {useFetch} from "@/composables/fetch";
-import {api} from "../globals";
+import { type ComputedRef, type Ref, ref, reactive, watch } from "vue";
+import type { OrderAPIType, APIData, OrderArrayType, ProductAPIType, UserAPIType, OrderItem } from "@/types/index";
+import { createArrayFromObject } from "@/helpers/global";
+import { useFetch } from "@/composables/fetch";
+import { api } from "../globals";
 
 
-interface TopItem extends Partial<ProductAPIType>, Partial<UserAPIType> {
+interface TopItem {
 	id: number,
 	count: number,
 	revenue: number
 };
+
+type TopItemInfo = TopItem | ProductAPIType & TopItem | UserAPIType & TopItem;
 
 interface TopItemsAPI {
 	data: APIData[],
@@ -17,15 +19,15 @@ interface TopItemsAPI {
 };
 
 interface TopItemsFunc {
-	topItems: Ref<TopItem[]>, 
+	topItems: Ref<TopItemInfo[]>, 
 	loading: Ref<boolean>
 }
 
 
 export const useFindTopItemsAndUsers = (orders: OrderAPIType[], status: ComputedRef<boolean>, url: string): TopItemsFunc => {
 	const topItemsAPI = reactive<TopItemsAPI | Record<any, never>>({});
+	const topItems = ref<TopItemInfo[]>([]);
 	const loading = ref<boolean>(true);
-	const topItems = ref<TopItem[]>([]);
 
 
 	const fillTopItems = (): number => {
@@ -41,7 +43,7 @@ export const useFindTopItemsAndUsers = (orders: OrderAPIType[], status: Computed
 
 	const getItem = (item: OrderItem): void => findItem(getIDByType(item)) ? updateItem(item) : addItem(item);
 
-	const findItem = (id: number): TopItem | undefined => topItems.value.find((item) => item.id === id);
+	const findItem = (id: number): TopItemInfo | undefined => topItems.value.find((item) => item.id === id);
 
 	const addItem = (item: OrderItem): void => {
 		const newItem = {
@@ -65,7 +67,7 @@ export const useFindTopItemsAndUsers = (orders: OrderAPIType[], status: Computed
 	}
 
 	const sortTopItems = (): void => {
-		topItems.value.sort((val1: TopItem, val2: TopItem): number => {
+		topItems.value.sort((val1: TopItemInfo, val2: TopItemInfo): number => {
 			if (val1.count < val2.count) return 1;
 			if (val1.count > val2.count) return -1;
 			if (val1.revenue < val2.revenue) return 1;
@@ -82,7 +84,7 @@ export const useFindTopItemsAndUsers = (orders: OrderAPIType[], status: Computed
 
 	watch(status, (): void => {
 		if (!status.value && fillTopItems() > 0) {
-			const params = topItems.value.reduce((value: string, item: TopItem): string => value += `id[]=${item.id}&`, "?");
+			const params = topItems.value.reduce((value: string, item: TopItemInfo): string => value += `id[]=${item.id}&`, "?");
 			Object.assign(topItemsAPI, useFetch(`${url}${params.slice(0, -1)}`));
 		}
 	});
@@ -90,7 +92,7 @@ export const useFindTopItemsAndUsers = (orders: OrderAPIType[], status: Computed
 	
 	watch(() => topItemsAPI.loading, (): void => {
 		if (topItemsAPI.data) {
-			topItems.value = topItems.value.map((item: TopItem): TopItem => ({...item, ...topItemsAPI.data.find(obj => obj.id === item.id)}));
+			topItems.value = topItems.value.map((item: TopItemInfo): TopItemInfo => ({...item, ...topItemsAPI.data.find(obj => obj.id === item.id)}));
 			loading.value = false;
 		}
 	});

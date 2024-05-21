@@ -1,9 +1,9 @@
 <script setup lang="ts">
-	import {type ComputedRef, inject} from "vue";
-	import type {OrderAPIType} from "@/types/index";
-	import {useFindTopItemsAndUsers} from "@/composables/topItemsAndUsers";
+	import { type ComputedRef, inject } from "vue";
+	import type { OrderAPIType } from "@/types/index";
+	import { useFindTopItemsAndUsers } from "@/composables/topItemsAndUsers";
 	import ActiveUsersItem from "@/components/ActiveUsersItem.vue";
-	import {api} from "../globals";
+	import { api } from "../globals";
 
 
 	const props = defineProps<{

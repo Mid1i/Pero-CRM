@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import {ref} from "vue";
+	import { ref } from "vue";
 
 	const emit = defineEmits<{
 		(e: "onSearch", key: string, value: string): void

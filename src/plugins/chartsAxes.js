@@ -1,4 +1,4 @@
-import {revenueAxisCallback, usersAxisCallback} from "@/plugins/chartsCallbacks";
+import { revenueAxisCallback, usersAxisCallback } from "@/plugins/chartsCallbacks";
 
 
 export const xAxis = {

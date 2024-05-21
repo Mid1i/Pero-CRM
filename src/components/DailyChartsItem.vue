@@ -1,7 +1,7 @@
 <script setup lang="ts">
-	import {type ComputedRef, ref, inject, onUpdated} from "vue";
-	import type {OrderAPIType, UserAPIType} from "@/types/index";
-	import {useCharts} from "@/composables/charts";
+	import { type ComputedRef, ref, inject, onUpdated } from "vue";
+	import type { OrderAPIType, UserAPIType } from "@/types/index";
+	import { useCharts } from "@/composables/charts";
 
 
 	const props = defineProps<{

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-	import {type ComputedRef, inject} from "vue";
-	import type {OrderAPIType, OrderArrayType, SeparateData} from "@/types/index";
+	import { type ComputedRef, inject } from "vue";
+	import type { OrderAPIType, OrderArrayType, SeparateData } from "@/types/index";
 	import WidgetsItem from "@/components/WidgetsItem.vue";
 
 
@@ -26,22 +26,22 @@
 			title="Зарегистрировались"
 			iconURL="visitors.svg"
 			:loading="isLoading"
-			:currentAmount="props.users.currentWeek.length"
-			:previousAmount="props.users.previousWeek.length"
+			:current-amount="props.users.currentWeek.length"
+			:previous-amount="props.users.previousWeek.length"
 		/>
 		<WidgetsItem
 			title="Товаров продано"
 			iconURL="products.svg"
 			:loading="isLoading"
-			:currentAmount="onCountProducts(props.orders.currentWeek as OrderAPIType[])"
-			:previousAmount="onCountProducts(props.orders.previousWeek as OrderAPIType[])"
+			:current-amount="onCountProducts(props.orders.currentWeek as OrderAPIType[])"
+			:previous-amount="onCountProducts(props.orders.previousWeek as OrderAPIType[])"
 		/>
 		<WidgetsItem
 			title="Общая выручка"
 			iconURL="revenue.svg"
 			:loading="isLoading"		
-			:currentAmount="onCountRevenue(props.orders.currentWeek as OrderAPIType[])"
-			:previousAmount="onCountRevenue(props.orders.previousWeek as OrderAPIType[])"
+			:current-amount="onCountRevenue(props.orders.currentWeek as OrderAPIType[])"
+			:previous-amount="onCountRevenue(props.orders.previousWeek as OrderAPIType[])"
 		/>
 	</div>
 </template>

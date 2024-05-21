@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import {onFormatPrice} from "@/helpers/formatters";
+	import { onFormatPrice } from "@/helpers/formatters";
 
 	
 	const props = defineProps<{

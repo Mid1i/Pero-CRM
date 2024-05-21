@@ -1,13 +1,13 @@
 <script setup lang="ts">
-	import {reactive, computed, provide} from "vue";
-	import type {SeparateData, OrderAPIType} from "@/types/index";
-	import {useSeparateData} from "@/composables/separateWeeksData";
+	import { reactive, computed, provide } from "vue";
+	import type { SeparateData, OrderAPIType } from "@/types/index";
+	import { useSeparateData } from "@/composables/separateWeeksData";
 	import DoughnutCharts from "@/components/DoughnutCharts.vue";
 	import TopProducts from "@/components/TopProducts.vue";
 	import ActiveUsers from "@/components/ActiveUsers.vue";
 	import DailyCharts from "@/components/DailyCharts.vue";
 	import Widgets from "@/components/Widgets.vue";
-	import {api} from "../globals";
+	import { api } from "../globals";
 
 
 	const users = reactive<SeparateData>(useSeparateData(api.users, "date_of_registration"));

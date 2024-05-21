@@ -1,7 +1,7 @@
-import {reactive, watch} from "vue";
-import type {APIData, SeparateData} from "@/types/index";
-import {getPastDate, getCurrentDate} from "@/helpers/date";
-import {useFetch} from "@/composables/fetch";
+import { reactive, watch } from "vue";
+import type { APIData, SeparateData } from "@/types/index";
+import { getPastDate, getCurrentDate } from "@/helpers/date";
+import { useFetch } from "@/composables/fetch";
 
 
 export const useSeparateData = (url: string, dateType: string): SeparateData => {

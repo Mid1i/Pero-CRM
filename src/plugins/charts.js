@@ -1,5 +1,5 @@
-import {doughnutTooltipCallbacks, revenueAxisCallback, revenueTooltipCallbacks, usersAxisCallback, usersTooltipCallbacks} from "@/plugins/chartsCallbacks";
-import {xAxis, yAxis} from "@/plugins/chartsAxes";
+import { doughnutTooltipCallbacks, revenueAxisCallback, revenueTooltipCallbacks, usersAxisCallback, usersTooltipCallbacks } from "@/plugins/chartsCallbacks";
+import { xAxis, yAxis } from "@/plugins/chartsAxes";
 
 
 export const revenueChartConfig = (revenue,  ordersAmount, weekDates, weekDays) => ({

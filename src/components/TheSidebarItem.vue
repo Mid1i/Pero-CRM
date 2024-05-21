@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import {RouterLink, useRouter} from "vue-router";
+	import { RouterLink, useRouter } from "vue-router";
 	
 
 	defineProps<{

@@ -1,10 +1,10 @@
-import {type Ref, ref} from "vue";
-import {Chart} from "chart.js/auto";
-import type {OrderAPIType, UserAPIType} from "@/types/index";
-import {getFormattedDate, getPastDate} from "@/helpers/date";
-import {createGradient} from "@/plugins/chartsGradient";
-import {createArrayFromObject} from "@/helpers/global";
-import {onFormatDay} from "@/helpers/formatters";
+import { type Ref, ref } from "vue";
+import { Chart } from "chart.js/auto";
+import type { OrderAPIType, UserAPIType } from "@/types/index";
+import { getFormattedDate, getPastDate } from "@/helpers/date";
+import { createGradient } from "@/plugins/chartsGradient";
+import { createArrayFromObject } from "@/helpers/global";
+import { onFormatDay } from "@/helpers/formatters";
 
 
 type WeekParams = OrderAPIType | UserAPIType;

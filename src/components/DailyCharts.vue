@@ -1,6 +1,6 @@
 <script setup lang="ts">
-	import type {OrderAPIType, SeparateData, UserAPIType} from "@/types/index";
-	import {revenueChartConfig, usersChartConfig} from "@/plugins/charts";
+	import type { OrderAPIType, SeparateData, UserAPIType } from "@/types/index";
+	import { revenueChartConfig, usersChartConfig } from "@/plugins/charts";
 	import DailyChartsItem from "@/components/DailyChartsItem.vue";
 
 

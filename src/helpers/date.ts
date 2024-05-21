@@ -1,4 +1,4 @@
-import {addLeadingZeros} from "@/helpers/global";
+import { addLeadingZeros } from "@/helpers/global";
 
 
 export const getCurrentDate = (): number => Date.now() / 1000;
