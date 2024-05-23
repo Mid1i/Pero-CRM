@@ -1,13 +1,13 @@
 <script setup lang="ts">
 	import { reactive, toRefs, watchEffect } from "vue";
-	// import type { FetchData } from "@/types/index";
+	import type { FetchData, UserAPIType } from "@/types/index";
 	import SearchInput from "@/components/SearchInput.vue";
 	import { useFetch } from "@/composables/fetch";
-	import { api, usersTableHeaders as headers } from "../globals";
+	import Table from "@/components/Table.vue";
+	import { api } from "../globals";
 
 	
-	// const users = reactive<FetchData>(useFetch(api.users));
-	const users = reactive({});
+	const users = reactive<FetchData>(useFetch(api.users));
 	const params = reactive({
 		name: ''
 	});
@@ -15,7 +15,7 @@
 	const updateParams = (key: string, value: string): void => {Object.assign(params, {[key]: `*${value}`})};
 
 	watchEffect((): void => {
-		const validParams = Object.fromEntries(Object.entries(params).filter(([key, value]: [string, any]): void => (value || key === "name")));
+		const validParams = Object.fromEntries(Object.entries(params).filter((item: [string, any]): any => item[1]));
 		Object.assign(users, useFetch(api.users, validParams));
 		
 		toRefs(params);
@@ -28,19 +28,10 @@
 		<div class="users__row">
 			<SearchInput @on-search="updateParams"/>
 		</div>
-		<table class="users__table">
-			<thead class="users__table-head">
-				<tr>
-					<td 
-						v-for="(header, index) in headers"
-						class="users__table-header"
-						:key="index"
-					>
-						{{ header }}
-					</td>
-				</tr>
-			</thead>
-		</table>
+		<Table 
+			:items="users.data as UserAPIType[]"
+			type="users"
+		/>
 	</div>
 </template>
 
@@ -65,64 +56,6 @@
 			justify-content: space-between;
 
 			margin-bottom: 1.56vw;
-		}
-
-		&__table {
-			display: flex;
-			flex-direction: column;
-
-			width: 100%;
-
-			&-head tr {
-				background: $--tertiary-back;
-				border-radius: 0.52vw 0.52vw 0px 0px;
-
-				display: flex;
-				gap: 1.56vw;
-
-				padding: 0.52vw 2.08vw 0.52vw 1.04vw;
-
-				width: 100%;
-			}
-
-			&-header {
-				@include subtitle;
-				font-weight: 600;
-
-				&:nth-child(1) {
-					flex: 0 0 1.04vw;
-				}
-
-				&:nth-child(2),
-				&:nth-child(3) {
-					flex: 1 0 auto;
-				}
-
-				&:nth-child(4) {
-					flex: 0 0 7.8vw;
-				}
-
-				&:nth-child(5) {
-					flex: 0 0 3.65vw;
-				}
-
-				&:nth-child(6) {
-					flex: 0 0 5.2vw;
-				}
-
-				&:nth-child(7) {
-					flex: 0 0 8.5vw;
-				}
-
-				&:nth-child(8) {
-					flex: 0 0 6.7vw;
-				}
-
-				&:nth-child(9) {
-					flex: 0 0 6.2vw;
-					text-align: right;
-				}
-			}
 		}
 	}
 </style>
