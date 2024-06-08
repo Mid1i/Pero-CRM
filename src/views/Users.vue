@@ -1,22 +1,24 @@
 <script setup lang="ts">
 	import { reactive, toRefs, watchEffect } from "vue";
-	import type { FetchData, UserAPIType } from "@/types/index";
+	import { IUsersAPI } from "@/types";
 	import SearchInput from "@/components/SearchInput.vue";
-	import { useFetch } from "@/composables/fetch";
+	import { useAxios } from "@/composables/axios";
 	import Table from "@/components/Table.vue";
-	import { api } from "../globals";
+	import { api } from "@/globals";
 
 	
-	const users = reactive<FetchData>(useFetch(api.users));
+	const users = reactive(useAxios<IUsersAPI>(api.users));
 	const params = reactive({
 		name: ''
 	});
 
-	const updateParams = (key: string, value: string): void => {Object.assign(params, {[key]: `*${value}`})};
 
-	watchEffect((): void => {
+	const updateParams = (key: string, value: string) => Object.assign(params, {[key]: `*${value}`});
+
+
+	watchEffect(() => {
 		const validParams = Object.fromEntries(Object.entries(params).filter((item: [string, any]): any => item[1]));
-		Object.assign(users, useFetch(api.users, validParams));
+		Object.assign(users, useAxios<IUsersAPI>(api.users, validParams));
 		
 		toRefs(params);
 	});
@@ -29,7 +31,7 @@
 			<SearchInput @on-search="updateParams"/>
 		</div>
 		<Table 
-			:items="users.data as UserAPIType[]"
+			:items="users.data"
 			type="users"
 		/>
 	</div>

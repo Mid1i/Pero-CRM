@@ -1,26 +1,27 @@
 <script setup lang="ts">
 	import { ref, watch, computed } from "vue";
+	import type { IUsersAPI } from "@/types";
 	import { Chart, ChartConfiguration } from "chart.js/auto";
-	import type { APIData } from "@/types/index";
 	import { doughnutChartConfig } from "@/plugins/charts";
 
 
-	type Data = APIData[] | null;
-
-
 	const props = defineProps<{
-		data: Data[],
+		data: (IUsersAPI[] | undefined)[],
 		colors: string[],
 		labels: string[]
 	}>();
 
 	const canvasRef = ref<HTMLCanvasElement | null>(null);
 
-	const isReady = computed<boolean>(() => props.data.every((item: Data): Data => item));
+
+	const isReady = computed<boolean>(() => props.data.every((item: IUsersAPI[] | undefined) => item));
+
+	const getDataLengths = computed<(number | undefined)[]>(() => props.data.map(item => item?.length));
+
 
 	watch(isReady, () => {
 		if (isReady.value && canvasRef.value) {
-			const config = doughnutChartConfig(props.data.map(item => item?.length), props.labels, props.colors) as ChartConfiguration;
+			const config = <ChartConfiguration>doughnutChartConfig(getDataLengths, props.labels, props.colors);
 			new Chart(canvasRef.value, config);
 		}
 	});

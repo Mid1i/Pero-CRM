@@ -1,4 +1,4 @@
-export interface ProductAPIType {
+export interface IProductsAPI {
 	id: number,
 	name: string,
 	src: string,

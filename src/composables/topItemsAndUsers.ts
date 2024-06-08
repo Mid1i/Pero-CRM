@@ -1,38 +1,37 @@
-import { type ComputedRef, type Ref, ref, reactive, watch } from "vue";
-import type { OrderAPIType, APIData, OrderArrayType, ProductAPIType, UserAPIType, OrderItem } from "@/types/index";
+import { ComputedRef, Ref, ref, reactive, watch } from "vue";
+import type { IOrdersAPI, IProductsAPI, ISizes, IUsersAPI } from "@/types";
 import { createArrayFromObject } from "@/helpers/global";
-import { useFetch } from "@/composables/fetch";
-import { api } from "../globals";
+import { useAxios } from "@/composables/axios";
+import { api } from "@/globals";
 
 
-interface TopItem {
+interface ITopItem {
 	id: number,
 	count: number,
 	revenue: number
 };
 
-type TopItemInfo = TopItem | ProductAPIType & TopItem | UserAPIType & TopItem;
-
-interface TopItemsAPI {
-	data: APIData[],
-	loading: boolean
-};
-
-interface TopItemsFunc {
-	topItems: Ref<TopItemInfo[]>, 
-	loading: Ref<boolean>
+interface ITopItemsAPI<T> {
+	data: T[] | undefined,
+	isLoading: boolean
 }
 
 
-export const useFindTopItemsAndUsers = (orders: OrderAPIType[], status: ComputedRef<boolean>, url: string): TopItemsFunc => {
-	const topItemsAPI = reactive<TopItemsAPI | Record<any, never>>({});
-	const topItems = ref<TopItemInfo[]>([]);
-	const loading = ref<boolean>(true);
+export const useFindTopItemsAndUsers = <T extends (IUsersAPI | IProductsAPI)>(orders: IOrdersAPI[], status: ComputedRef<boolean>, url: string): {
+	topItems: Ref<(ITopItem & T)[] | ITopItem[]>,
+	isLoading: Ref<boolean>
+} => {
+	const isLoading = ref<boolean>(true);
+	const topItems = ref<ITopItem[]>([]);
+	const topItemsAPI: ITopItemsAPI<T> = reactive({
+		data: [],
+		isLoading: true
+	});
 
 
 	const fillTopItems = (): number => {
 		if (url === api.products) {
-			createArrayFromObject(orders, "order").map((order: OrderArrayType[]): void[] => order.map(getItem));
+			createArrayFromObject(orders, "order").map((order: ISizes[]) => order.map(getItem));
 		} else {
 			orders.map(getItem);
 		}
@@ -41,11 +40,11 @@ export const useFindTopItemsAndUsers = (orders: OrderAPIType[], status: Computed
 		return topItems.value.length;
 	}
 
-	const getItem = (item: OrderItem): void => findItem(getIDByType(item)) ? updateItem(item) : addItem(item);
+	const getItem = (item: IOrdersAPI | ISizes) => findItem(getIDByType(item)) ? updateItem(item) : addItem(item);
 
-	const findItem = (id: number): TopItemInfo | undefined => topItems.value.find((item) => item.id === id);
+	const findItem = (id: number): ITopItem | undefined => topItems.value.find((item) => item.id === id);
 
-	const addItem = (item: OrderItem): void => {
+	const addItem = (item: IOrdersAPI | ISizes) => {
 		const newItem = {
 			id: getIDByType(item), 
 			count: getNumberByType(item, "count"), 
@@ -55,8 +54,9 @@ export const useFindTopItemsAndUsers = (orders: OrderAPIType[], status: Computed
 		topItems.value = [...topItems.value, newItem];
 	}
 
-	const updateItem = (item: OrderItem): void => {
-		const currentItem = findItem(getIDByType(item)) as TopItem;
+	const updateItem = (item:IOrdersAPI | ISizes) => {
+		const currentItem = <ITopItem>findItem(getIDByType(item));
+
 		const index = topItems.value.indexOf(currentItem);
 
 		topItems.value[index] = {
@@ -66,8 +66,8 @@ export const useFindTopItemsAndUsers = (orders: OrderAPIType[], status: Computed
 		};
 	}
 
-	const sortTopItems = (): void => {
-		topItems.value.sort((val1: TopItemInfo, val2: TopItemInfo): number => {
+	const sortTopItems = () => {
+		topItems.value.sort((val1: ITopItem, val2: ITopItem): number => {
 			if (val1.count < val2.count) return 1;
 			if (val1.count > val2.count) return -1;
 			if (val1.revenue < val2.revenue) return 1;
@@ -77,25 +77,25 @@ export const useFindTopItemsAndUsers = (orders: OrderAPIType[], status: Computed
 	}
 
 
-	const getIDByType = (item: OrderItem): number => "user_id" in item ? item.user_id : item.id;
+	const getIDByType = (item: IOrdersAPI | ISizes): number => "user_id" in item ? item.user_id : item.id;
 
-	const getNumberByType = (item: OrderItem, property: string): number => property in item ? item[property] : 1;
+	const getNumberByType = (item: IOrdersAPI | ISizes, property: string): number => property in item ? item[property] : 1;
 
 
-	watch(status, (): void => {
+	watch(status, () => {
 		if (!status.value && fillTopItems() > 0) {
-			const params = topItems.value.reduce((value: string, item: TopItemInfo): string => value += `id[]=${item.id}&`, "?");
-			Object.assign(topItemsAPI, useFetch(`${url}${params.slice(0, -1)}`));
+			const params = topItems.value.reduce((value: string, item): string => value += `id[]=${item.id}&`, "?");
+			Object.assign(topItemsAPI, useAxios<T, {}>(`${url}${params.slice(0, -1)}`));
 		}
 	});
 
 	
-	watch(() => topItemsAPI.loading, (): void => {
+	watch(() => topItemsAPI.isLoading, (): void => {
 		if (topItemsAPI.data) {
-			topItems.value = topItems.value.map((item: TopItemInfo): TopItemInfo => ({...item, ...topItemsAPI.data.find(obj => obj.id === item.id)}));
-			loading.value = false;
+			topItems.value = topItems.value.map((item: ITopItem): ITopItem => ({...item, ...topItemsAPI.data?.find((obj: T) => obj.id === item.id)}));
+			isLoading.value = false;
 		}
 	});
 
-	return {topItems, loading};
+	return {topItems, isLoading};
 }

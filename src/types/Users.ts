@@ -1,4 +1,4 @@
-export interface UserAPIType {
+export interface IUsersAPI {
 	id: number,
 	name: string,
 	age: number,

@@ -1,11 +1,12 @@
 <script setup lang="ts">
-	import type { APIData, UserAPIType } from "@/types/index";
-	import { usersTableHeaders as headers } from "../globals";
+	import type { IUsersAPI } from "@/types/index";
+	import { usersTableHeaders as headers } from "@/globals";
 	import TableUser from "@/components/TableUser.vue";
 
+
 	defineProps<{
-		items: APIData[] | null,
-		type: string	
+		items: IUsersAPI[] | undefined,
+		type: string
 	}>();
 </script>
 
@@ -28,7 +29,7 @@
 				v-for="(item) in items"
 				v-if="type === 'users'"
 				:key="item.id"
-				:="item as UserAPIType"
+				:="item"
 			/>
 		</tbody>
 	</table>

@@ -1,13 +1,13 @@
-import { type Ref, ref } from "vue";
+import { Ref, ref } from "vue";
 import { Chart } from "chart.js/auto";
-import type { OrderAPIType, UserAPIType } from "@/types/index";
+import type { IOrdersAPI, IUsersAPI } from "@/types";
 import { getFormattedDate, getPastDate } from "@/helpers/date";
 import { createGradient } from "@/plugins/chartsGradient";
 import { createArrayFromObject } from "@/helpers/global";
 import { onFormatDay } from "@/helpers/formatters";
 
 
-type WeekParams = OrderAPIType | UserAPIType;
+type TypePropsWeeks = IOrdersAPI | IUsersAPI;
 
 interface WeekData {
 	data: number,
@@ -18,21 +18,21 @@ interface WeekData {
 };
 
 
-export const useCharts = (currentWeek: WeekParams[], previousWeek: WeekParams[], config: Function, canvasRef: Ref<HTMLCanvasElement | null>, type: string): void => {
+export const useCharts = (currentWeek: TypePropsWeeks[], previousWeek: TypePropsWeeks[], config: Function, canvasRef: Ref<HTMLCanvasElement | null>, type: string) => {
 	const weekData = ref<WeekData[]>([]);
 
 
-	const compareDates = (item: WeekParams, date: string) => ("date_of_registration" in item && getFormattedDate(item.date_of_registration) === date) ? 1 : 0;
+	const compareDates = (item: TypePropsWeeks, date: string) => ("date_of_registration" in item && getFormattedDate(item.date_of_registration) === date) ? 1 : 0;
 
 	const calculateUsersData = (date: string, previousDate: string): Record<string, number> => {
-		const data = currentWeek.reduce((value: number, item: WeekParams): number => value += compareDates(item, date), 0);
-		const previousData = previousWeek.reduce((value: number, item: WeekParams): number => value += compareDates(item, previousDate), 0);
+		const data = currentWeek.reduce((value: number, item: TypePropsWeeks): number => value += compareDates(item, date), 0);
+		const previousData = previousWeek.reduce((value: number, item: TypePropsWeeks): number => value += compareDates(item, previousDate), 0);
 
 		return {data, previousData};
 	}
 
 	const calculateOrdersData = (date: string): Record<string, number> => {
-		const [data, previousData] = currentWeek.reduce((value: number[], item: WeekParams): number[] => {
+		const [data, previousData] = currentWeek.reduce((value: number[], item: TypePropsWeeks): number[] => {
 			if ("price" in item && getFormattedDate(item.date_of_creating) === date) {
 				return [value[0] += item.price, value[1] += 1];
 			}

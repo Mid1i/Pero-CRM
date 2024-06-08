@@ -10,6 +10,7 @@
 		loading: boolean
 	}>();
 	
+	
 	const compareAmounts = (): string | undefined => {
 		if (props.currentAmount !== undefined && props.previousAmount !== undefined) {
 			if (props.previousAmount === 0) {

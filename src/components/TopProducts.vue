@@ -1,25 +1,25 @@
 <script setup lang="ts">
-	import { type ComputedRef, inject } from "vue";
-	import type { OrderAPIType } from "@/types/index";
+	import { ComputedRef, inject } from "vue";
+	import type { IOrdersAPI, IProductsAPI } from "@/types";
 	import { useFindTopItemsAndUsers } from "@/composables/topItemsAndUsers";
 	import TopProductsItem from "@/components/TopProductsItem.vue";
-	import { api } from "../globals";
+	import { api } from "@/globals";
 
 
 	const props = defineProps<{
-		orders: OrderAPIType[]
+		orders: IOrdersAPI[]
 	}>();
 
-	const isLoading = inject("isLoading") as ComputedRef<boolean>;
+	const isLoadingOrders = <ComputedRef<boolean>>inject("isLoading");
 
-	const {topItems, loading} = useFindTopItemsAndUsers(props.orders, isLoading, api.products);
+	const {topItems, isLoading} = useFindTopItemsAndUsers<IProductsAPI>(props.orders, isLoadingOrders, api.products);
 </script>
 
 
 <template>
 	<div class="products">
 		<h4 class="products__title">Самые продаваемые товары за неделю</h4>
-		<ul v-if="!loading" class="products__list">
+		<ul v-if="!isLoading" class="products__list">
 			<TopProductsItem
 				v-for="(product, index) in topItems.slice(0, 8)"
 				:index="index + 1"

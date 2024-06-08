@@ -1,21 +1,22 @@
 <script setup lang="ts">
 	import { reactive } from "vue";
+	import type { IUsersAPI } from "@/types";
 	import DoughnutChartsItem from "@/components/DoughnutChartsItem.vue";
-	import { useFetch } from "@/composables/fetch";
-	import { api } from "../globals";
+	import { useAxios } from "@/composables/axios";
+	import { api } from "@/globals";
 
 
-	const params = (val1: number, val2: number): Record<string, number> => ({
+	const getAgeRange = (val1: number, val2: number): Record<string, number> => ({
 		"age[from]": val1,
 		"age[to]": val2
 	});
 
-	const maleUsers = reactive(useFetch(api.users, {gender: true}));
-	const femaleUsers = reactive(useFetch(api.users, {gender: false}));
+	const maleUsers = reactive(useAxios<IUsersAPI>(api.users, {gender: true}));
+	const femaleUsers = reactive(useAxios<IUsersAPI>(api.users, {gender: false}));
 
-	const youngUsers = reactive(useFetch(api.users, params(0, 30)));
-	const averageUsers = reactive(useFetch(api.users, params(31, 50)));
-	const oldUsers = reactive(useFetch(api.users, params(51, 150)));
+	const youngUsers = reactive(useAxios<IUsersAPI>(api.users, getAgeRange(0, 30)));
+	const averageUsers = reactive(useAxios<IUsersAPI>(api.users, getAgeRange(31, 50)));
+	const oldUsers = reactive(useAxios<IUsersAPI>(api.users, getAgeRange(51, 150)));
 </script>
 
 

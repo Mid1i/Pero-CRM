@@ -1,22 +1,23 @@
 <script setup lang="ts">
-	import { type ComputedRef, inject } from "vue";
-	import type { OrderAPIType, OrderArrayType, SeparateData } from "@/types/index";
+	import { ComputedRef, inject } from "vue";
+	import type { ISeparateData, IUsersAPI, IOrdersAPI, ISizes } from "@/types";
 	import WidgetsItem from "@/components/WidgetsItem.vue";
 
 
 	const props = defineProps<{
-		users: SeparateData,
-		orders: SeparateData
+		users: ISeparateData<IUsersAPI>,
+		orders: ISeparateData<IOrdersAPI>
 	}>();
 
-	const isLoading = inject("isLoading") as ComputedRef<boolean>;
+	const isLoading = <ComputedRef<boolean>>inject("isLoading");
 
-	const onCountProducts = (array: OrderAPIType[]): number => {
-		const products = array.reduce((result: OrderArrayType[], item: OrderAPIType): OrderArrayType[] => [...result, ...item.order], []);
-		return products.reduce((result: number, item: OrderArrayType): number => result += item.count, 0);
+		
+	const onCountProducts = (array: IOrdersAPI[]): number => {
+		const products = array.reduce((result: ISizes[], item: IOrdersAPI): ISizes[] => [...result, ...item.order], []);
+		return products.reduce((result: number, item: ISizes): number => result += item.count, 0);
 	}
 
-	const onCountRevenue = (array: OrderAPIType[]): number => array.reduce((value: number, item: OrderAPIType): number => value += item.price, 0);
+	const onCountRevenue = (array: IOrdersAPI[]): number => array.reduce((value: number, item: IOrdersAPI): number => value += item.price, 0);
 </script>
 
 
@@ -33,15 +34,15 @@
 			title="Товаров продано"
 			iconURL="products.svg"
 			:loading="isLoading"
-			:current-amount="onCountProducts(props.orders.currentWeek as OrderAPIType[])"
-			:previous-amount="onCountProducts(props.orders.previousWeek as OrderAPIType[])"
+			:current-amount="onCountProducts(props.orders.currentWeek)"
+			:previous-amount="onCountProducts(props.orders.previousWeek)"
 		/>
 		<WidgetsItem
 			title="Общая выручка"
 			iconURL="revenue.svg"
 			:loading="isLoading"		
-			:current-amount="onCountRevenue(props.orders.currentWeek as OrderAPIType[])"
-			:previous-amount="onCountRevenue(props.orders.previousWeek as OrderAPIType[])"
+			:current-amount="onCountRevenue(props.orders.currentWeek)"
+			:previous-amount="onCountRevenue(props.orders.previousWeek)"
 		/>
 	</div>
 </template>

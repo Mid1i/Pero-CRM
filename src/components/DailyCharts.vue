@@ -1,12 +1,12 @@
 <script setup lang="ts">
-	import type { OrderAPIType, SeparateData, UserAPIType } from "@/types/index";
+	import type { IOrdersAPI, IUsersAPI, ISeparateData } from "@/types";
 	import { revenueChartConfig, usersChartConfig } from "@/plugins/charts";
 	import DailyChartsItem from "@/components/DailyChartsItem.vue";
 
 
 	defineProps<{
-		orders: SeparateData,
-		users: SeparateData
+		orders: ISeparateData<IOrdersAPI>,
+		users: ISeparateData<IUsersAPI>
 	}>();
 </script>
 
@@ -14,15 +14,15 @@
 <template>
 	<div class="content__charts">
 		<DailyChartsItem
-			:previous-week="orders.previousWeek as OrderAPIType[]" 
-			:current-week="orders.currentWeek as OrderAPIType[]"
+			:previous-week="orders.previousWeek" 
+			:current-week="orders.currentWeek"
 			:config="revenueChartConfig" 
 			title="Дневная статистика по продажам"
 			type="orders"
 		/>
 		<DailyChartsItem
-			:previous-week="users.previousWeek as UserAPIType[]" 
-			:current-week="users.currentWeek as UserAPIType[]"
+			:previous-week="users.previousWeek" 
+			:current-week="users.currentWeek"
 			:config="usersChartConfig" 
 			title="Дневная статистика по пользователям"
 			type="users"

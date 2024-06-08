@@ -1,25 +1,26 @@
 <script setup lang="ts">
 	import { type ComputedRef, inject } from "vue";
-	import type { OrderAPIType } from "@/types/index";
+	import type { IOrdersAPI, IUsersAPI } from "@/types";
 	import { useFindTopItemsAndUsers } from "@/composables/topItemsAndUsers";
 	import ActiveUsersItem from "@/components/ActiveUsersItem.vue";
-	import { api } from "../globals";
+	import { api } from "@/globals";
 
 
 	const props = defineProps<{
-		orders: OrderAPIType[]
+		orders: IOrdersAPI[]
 	}>();
 
-	const isLoading = inject("isLoading") as ComputedRef<boolean>;
+	const isLoadingOrders = <ComputedRef<boolean>>inject("isLoading");
 
-	const {topItems, loading} = useFindTopItemsAndUsers(props.orders, isLoading, api.users);
+
+	const {topItems, isLoading} = useFindTopItemsAndUsers<IUsersAPI>(props.orders, isLoadingOrders, api.users);
 </script>
 
 
 <template>
 	<div class="users">
 		<h4 class="users__title">Самые активные пользователи<br/>за неделю</h4>
-		<ul v-if="!loading" class="users__list">
+		<ul v-if="!isLoading" class="users__list">
 			<ActiveUsersItem
 				v-for="(user, index) in topItems.slice(0, 5)"
 				:index="index + 1"

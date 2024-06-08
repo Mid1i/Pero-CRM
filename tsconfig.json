@@ -24,18 +24,19 @@
     "noImplicitAny": false,
 
     /* Aliases */
-    "baseUrl": "src",
+    "baseUrl": ".",
     "paths": {
-      "@/": ["/*"],
-      "@/assets/*": ["assets/*"],
-      "@/components/*": ["components/*"],
-      "@/composables/*": ["composables/*"],
-      "@/helpers/*": ["helpers/*"],
-      "@/layouts/*": ["layouts/*"],
-      "@/plugins/*": ["plugins/*"],
-      "@/router/*": ["router/*"],
-      "@/types/*": ["types/*"],
-      "@/views/*": ["views/*"]
+      "@/*": ["./src/*"],
+      "@/assets/*": ["./src/assets/*"],
+      "@/blocks/*": ["./src/blocks/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/composables/*": ["./src/composables/*"],
+      "@/helpers/*": ["./src/helpers/*"],
+      "@/layouts/*": ["./src/layouts/*"],
+      "@/plugins/*": ["./src/plugins/*"],
+      "@/router/*": ["./src/router/*"],
+      "@/types/*": ["./src/types/*"],
+      "@/views/*": ["./src/views/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "src/plugins/chartsCallbacks.js", "src/composables/topItemsAndUsers.ts"],

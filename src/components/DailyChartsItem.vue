@@ -1,22 +1,23 @@
 <script setup lang="ts">
-	import { type ComputedRef, ref, inject, onUpdated } from "vue";
-	import type { OrderAPIType, UserAPIType } from "@/types/index";
+	import { ComputedRef, ref, inject, onUpdated } from "vue";
+	import type { IOrdersAPI, IUsersAPI } from "@/types";
 	import { useCharts } from "@/composables/charts";
 
 
 	const props = defineProps<{
 		config: Function,
-		currentWeek: UserAPIType[] | OrderAPIType[],
-		previousWeek: UserAPIType[] | OrderAPIType[],
+		currentWeek: IOrdersAPI[] | IUsersAPI[],
+		previousWeek: IOrdersAPI[] | IUsersAPI[],
 		title: string,
 		type: string
 	}>();
 
 	const canvasRef = ref<HTMLCanvasElement | null>(null);
 
-	const isLoading = inject("isLoading") as ComputedRef<boolean>;
-	
-	onUpdated((): void => useCharts(props.currentWeek, props.previousWeek, props.config, canvasRef, props.type));
+	const isLoading = <ComputedRef<boolean>>inject("isLoading");
+
+
+	onUpdated(() => useCharts(props.currentWeek, props.previousWeek, props.config, canvasRef, props.type));
 </script>
 
 
@@ -30,7 +31,8 @@
 			</div>
 		</div>
 		<div :class="['chart__section', {loading: isLoading}]">
-			<canvas v-if="!isLoading" ref="canvasRef"></canvas>
+			<canvas v-if="!isLoading && (currentWeek.length > 0 || previousWeek.length > 0)" ref="canvasRef"></canvas>
+			<h4 v-else-if="currentWeek.length === 0 || previousWeek.length === 0" class="chart__empty">Нет данных</h4>
 		</div>
 	</div>
 </template>
@@ -55,6 +57,10 @@
 			align-items: center;
 			display: flex;
 			justify-content: space-between;
+		}
+
+		&__empty {
+			@include title;
 		}
 
 		&__right {
@@ -90,6 +96,10 @@
 		}
 
 		&__section {
+			align-items: center;
+			display: flex;
+			justify-content: center;
+
 			height: 280px;
 			width: 100%;
 
