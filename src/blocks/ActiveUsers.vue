@@ -1,8 +1,9 @@
 <script setup lang="ts">
-	import { type ComputedRef, inject } from "vue";
-	import type { IOrdersAPI, IUsersAPI } from "@/types";
+	import { ComputedRef, inject } from "vue";
+	import type { IOrdersAPI, IUsersAPI } from "@/interfaces";
+	import ActiveUserCard from "@/components/Cards/ActiveUserCard.vue";
+
 	import { useFindTopItemsAndUsers } from "@/composables/topItemsAndUsers";
-	import ActiveUsersItem from "@/components/ActiveUsersItem.vue";
 	import { api } from "@/globals";
 
 
@@ -21,7 +22,7 @@
 	<div class="users">
 		<h4 class="users__title">Самые активные пользователи<br/>за неделю</h4>
 		<ul v-if="!isLoading" class="users__list">
-			<ActiveUsersItem
+			<ActiveUserCard
 				v-for="(user, index) in topItems.slice(0, 5)"
 				:index="index + 1"
 				:key="index"
@@ -29,7 +30,7 @@
 			/>
 		</ul>
 		<ul v-else class="users__list">
-			<ActiveUsersItem
+			<ActiveUserCard
 				v-for="index in 5"
 				:index="index"
 				:key="index"

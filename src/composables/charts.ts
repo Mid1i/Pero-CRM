@@ -1,6 +1,7 @@
 import { Ref, ref } from "vue";
 import { Chart } from "chart.js/auto";
-import type { IOrdersAPI, IUsersAPI } from "@/types";
+import type { IOrdersAPI, IUsersAPI } from "@/interfaces";
+
 import { getFormattedDate, getPastDate } from "@/helpers/date";
 import { createGradient } from "@/plugins/chartsGradient";
 import { createArrayFromObject } from "@/helpers/global";

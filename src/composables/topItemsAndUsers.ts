@@ -1,5 +1,6 @@
 import { ComputedRef, Ref, ref, reactive, watch } from "vue";
-import type { IOrdersAPI, IProductsAPI, ISizes, IUsersAPI } from "@/types";
+import type { IOrdersAPI, IProductsAPI, ISizes, IUsersAPI } from "@/interfaces";
+
 import { createArrayFromObject } from "@/helpers/global";
 import { useAxios } from "@/composables/axios";
 import { api } from "@/globals";
@@ -85,7 +86,7 @@ export const useFindTopItemsAndUsers = <T extends (IUsersAPI | IProductsAPI)>(or
 	watch(status, () => {
 		if (!status.value && fillTopItems() > 0) {
 			const params = topItems.value.reduce((value: string, item): string => value += `id[]=${item.id}&`, "?");
-			Object.assign(topItemsAPI, useAxios<T, {}>(`${url}${params.slice(0, -1)}`));
+			Object.assign(topItemsAPI, useAxios<T>(`${url}${params.slice(0, -1)}`));
 		}
 	});
 

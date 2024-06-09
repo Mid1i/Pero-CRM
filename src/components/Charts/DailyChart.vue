@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	import { ComputedRef, ref, inject, onUpdated } from "vue";
-	import type { IOrdersAPI, IUsersAPI } from "@/types";
+	import type { IOrdersAPI, IUsersAPI } from "@/interfaces";
+	
 	import { useCharts } from "@/composables/charts";
 
 

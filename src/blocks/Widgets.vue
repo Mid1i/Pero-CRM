@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { ComputedRef, inject } from "vue";
-	import type { ISeparateData, IUsersAPI, IOrdersAPI, ISizes } from "@/types";
-	import WidgetsItem from "@/components/WidgetsItem.vue";
+	import type { IOrdersAPI, ISeparateData, ISizes, IUsersAPI } from "@/interfaces";
+	import WidgetsItem from "@/blocks/WidgetsItem.vue";
 
 
 	const props = defineProps<{

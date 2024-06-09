@@ -1,7 +1,8 @@
 <script setup lang="ts">
 	import { ref, watch, computed } from "vue";
-	import type { IUsersAPI } from "@/types";
 	import { Chart, ChartConfiguration } from "chart.js/auto";
+	import type { IUsersAPI } from "@/interfaces";
+	
 	import { doughnutChartConfig } from "@/plugins/charts";
 
 

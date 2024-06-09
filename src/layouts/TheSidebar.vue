@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { ref } from "vue";
-	import TheSidebarItem from "@/components/TheSidebarItem.vue";
+	import BaseSidebarButton from "@/components/Buttons/BaseSidebarButton.vue";
 	import { sidebarItems } from "@/globals";
 
 
@@ -45,7 +45,7 @@
 				<li class="aside-bar__menu-category">Категории</li>
 				<li class="aside-bar__menu-el">
 					<ul class="aside-bar__menu-list">
-						<TheSidebarItem
+						<BaseSidebarButton
 							v-for="item in sidebarItems.categories"
 							:key="item.id"
 							:="item"
@@ -55,7 +55,7 @@
 				<li class="aside-bar__menu-category">Служебные</li>
 				<li class="aside-bar__menu-el">
 					<ul class="aside-bar__menu-list">
-						<TheSidebarItem
+						<BaseSidebarButton
 							v-for="item in sidebarItems.services"
 							:key="item.id"
 							:="item"

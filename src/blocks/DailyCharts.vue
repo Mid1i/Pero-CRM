@@ -1,7 +1,8 @@
 <script setup lang="ts">
-	import type { IOrdersAPI, IUsersAPI, ISeparateData } from "@/types";
+	import type { IOrdersAPI, ISeparateData, IUsersAPI } from "@/interfaces";
+	import DailyChart from "@/components/Charts/DailyChart.vue";
+
 	import { revenueChartConfig, usersChartConfig } from "@/plugins/charts";
-	import DailyChartsItem from "@/components/DailyChartsItem.vue";
 
 
 	defineProps<{
@@ -13,14 +14,14 @@
 
 <template>
 	<div class="content__charts">
-		<DailyChartsItem
+		<DailyChart
 			:previous-week="orders.previousWeek" 
 			:current-week="orders.currentWeek"
 			:config="revenueChartConfig" 
 			title="Дневная статистика по продажам"
 			type="orders"
 		/>
-		<DailyChartsItem
+		<DailyChart
 			:previous-week="users.previousWeek" 
 			:current-week="users.currentWeek"
 			:config="usersChartConfig" 

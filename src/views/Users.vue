@@ -1,9 +1,10 @@
 <script setup lang="ts">
 	import { reactive, toRefs, watchEffect } from "vue";
-	import { IUsersAPI } from "@/types";
-	import SearchInput from "@/components/SearchInput.vue";
+	import { IUsersAPI } from "@/interfaces";
+	import BaseSearch from "@/components/Inputs/BaseSearch.vue";
+	import TableUsers from "@/components/Tables/TableUsers.vue";
+	
 	import { useAxios } from "@/composables/axios";
-	import Table from "@/components/Table.vue";
 	import { api } from "@/globals";
 
 	
@@ -28,12 +29,9 @@
 <template>
 	<div class="users">
 		<div class="users__row">
-			<SearchInput @on-search="updateParams"/>
+			<BaseSearch @on-search="updateParams"/>
 		</div>
-		<Table 
-			:items="users.data"
-			type="users"
-		/>
+		<TableUsers :users="users.data"/>
 	</div>
 </template>
 

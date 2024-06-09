@@ -58,17 +58,3 @@ export const sidebarItems: Record<string, SidebarItem[]> = {
 		},
 	],
 };
-
-
-export const usersTableHeaders: string[] = [
-	"ID",
-	"Имя",
-	"E-mail",
-	"Телефон",
-	"Возраст",
-	"Пол",
-	"Дата Регистрации",
-	"Всего Заказов",
-	"Статус"
-];
-

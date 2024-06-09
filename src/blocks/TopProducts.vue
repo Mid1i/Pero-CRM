@@ -1,8 +1,9 @@
 <script setup lang="ts">
 	import { ComputedRef, inject } from "vue";
-	import type { IOrdersAPI, IProductsAPI } from "@/types";
+	import type { IOrdersAPI, IProductsAPI } from "@/interfaces";
+	import TopProductCard from "@/components/Cards/TopProductCard.vue";
+
 	import { useFindTopItemsAndUsers } from "@/composables/topItemsAndUsers";
-	import TopProductsItem from "@/components/TopProductsItem.vue";
 	import { api } from "@/globals";
 
 
@@ -20,7 +21,7 @@
 	<div class="products">
 		<h4 class="products__title">Самые продаваемые товары за неделю</h4>
 		<ul v-if="!isLoading" class="products__list">
-			<TopProductsItem
+			<TopProductCard
 				v-for="(product, index) in topItems.slice(0, 8)"
 				:index="index + 1"
 				:key="index"
@@ -28,7 +29,7 @@
 			/>
 		</ul>
 		<ul v-else class="products__list">
-			<TopProductsItem
+			<TopProductCard
 				v-for="index in 8"
 				:index="index"
 				:key="index"

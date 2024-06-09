@@ -1,12 +1,13 @@
 <script setup lang="ts">
-	import { reactive, computed, provide } from "vue";
-	import type { ISeparateData, IOrdersAPI, IUsersAPI } from "@/types";
+	import { computed, provide, reactive } from "vue";
+	import type { IOrdersAPI, ISeparateData, IUsersAPI } from "@/interfaces";
+	import DoughnutCharts from "@/blocks/DoughnutCharts.vue";
+	import ActiveUsers from "@/blocks/ActiveUsers.vue";
+	import DailyCharts from "@/blocks/DailyCharts.vue";
+	import TopProducts from "@/blocks/TopProducts.vue";
+	import Widgets from "@/blocks/Widgets.vue";
+	
 	import { useSeparateData } from "@/composables/separateData";
-	import DoughnutCharts from "@/components/DoughnutCharts.vue";
-	import TopProducts from "@/components/TopProducts.vue";
-	import ActiveUsers from "@/components/ActiveUsers.vue";
-	import DailyCharts from "@/components/DailyCharts.vue";
-	import Widgets from "@/components/Widgets.vue";
 	import { api } from "@/globals";
 
 
