@@ -22,7 +22,7 @@
 
 	watch(isReady, () => {
 		if (isReady.value && canvasRef.value) {
-			const config = <ChartConfiguration>doughnutChartConfig(getDataLengths, props.labels, props.colors);
+			const config = <ChartConfiguration>doughnutChartConfig(getDataLengths.value, props.labels, props.colors);
 			new Chart(canvasRef.value, config);
 		}
 	});
@@ -30,7 +30,7 @@
 
 
 <template>
-	<div :class="['chart__section', {loading: !isReady}]">
+	<div :class="['chart__section', { loading: !isReady }]">
 		<canvas ref="canvasRef"></canvas>
 	</div>
 	<ul class="chart__labels">
