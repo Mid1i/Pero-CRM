@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { ComputedRef, inject } from "vue";
 	import type { IOrdersAPI, IUsersAPI } from "@/interfaces";
-	import ActiveUserCard from "@/components/Cards/ActiveUserCard.vue";
+	import ActiveUserCard from "@/components/ActiveUsersCard.vue";
 
 	import { useFindTopItemsAndUsers } from "@/composables/topItemsAndUsers";
 	import { api } from "@/globals";

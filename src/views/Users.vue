@@ -1,8 +1,8 @@
 <script setup lang="ts">
 	import { reactive, toRefs, watchEffect } from "vue";
 	import { IUsersAPI } from "@/interfaces";
-	import BaseSearch from "@/components/Inputs/BaseSearch.vue";
-	import TableUsers from "@/components/Tables/TableUsers.vue";
+	import BaseSearch from "@/components/BaseSearch.vue";
+	import TableUsers from "@/components/TableUsers.vue";
 	
 	import { useAxios } from "@/composables/axios";
 	import { api } from "@/globals";

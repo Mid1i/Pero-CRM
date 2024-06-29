@@ -28,7 +28,6 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/assets/*": ["./src/assets/*"],
-      "@/blocks/*": ["./src/blocks/*"],
       "@/components/*": ["./src/components/*"],
       "@/composables/*": ["./src/composables/*"],
       "@/helpers/*": ["./src/helpers/*"],

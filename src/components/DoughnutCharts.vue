@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { reactive } from "vue";
 	import type { IUsersAPI } from "@/interfaces";
-	import DoughnutChart from "@/components/Charts/DoughnutChart.vue";
+	import DoughnutChartsItem from "@/components/DoughnutChartsItem.vue";
 
 	import { useAxios } from "@/composables/axios";
 	import { api } from "@/globals";
@@ -24,12 +24,12 @@
 <template>
 	<div class="content__charts charts">
 		<h4 class="charts__title">Зарегистрированные пользователи</h4>
-		<DoughnutChart
+		<DoughnutChartsItem
 			:data="[maleUsers.data, femaleUsers.data]"
 			:colors="['rgb(85, 161, 232)', 'rgb(238, 110, 132)']"
 			:labels="['Мужчины', 'Женщины']"
 		/>
-		<DoughnutChart
+		<DoughnutChartsItem
 			:data="[youngUsers.data, averageUsers.data, oldUsers.data]"
 			:colors="['rgb(255, 204, 0)', 'rgb(255, 149, 0)', 'rgb(76, 217, 100)']"
 			:labels="['Меньше 30 лет', '30-50 лет', 'Больше 50 лет']"

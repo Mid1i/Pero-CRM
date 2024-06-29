@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import type { IOrdersAPI, ISeparateData, IUsersAPI } from "@/interfaces";
-	import DailyChart from "@/components/Charts/DailyChart.vue";
+	import DailyChartsItem from "@/components/DailyChartsItem.vue";
 
 	import { revenueChartConfig, usersChartConfig } from "@/plugins/charts";
 
@@ -14,14 +14,14 @@
 
 <template>
 	<div class="content__charts">
-		<DailyChart
+		<DailyChartsItem
 			:previous-week="orders.previousWeek" 
 			:current-week="orders.currentWeek"
 			:config="revenueChartConfig" 
 			title="Дневная статистика по продажам"
 			type="orders"
 		/>
-		<DailyChart
+		<DailyChartsItem
 			:previous-week="users.previousWeek" 
 			:current-week="users.currentWeek"
 			:config="usersChartConfig" 
