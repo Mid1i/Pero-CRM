@@ -11,7 +11,7 @@
 		orders: IOrdersAPI[]
 	}>();
 
-	const isLoadingOrders = <ComputedRef<boolean>>inject("isLoading");
+	const isLoadingOrders = inject("isLoading") as ComputedRef<boolean>;
 
 	const {topItems, isLoading} = useFindTopItemsAndUsers<IProductsAPI>(props.orders, isLoadingOrders, api.products);
 </script>

@@ -1,4 +1,4 @@
-export const onFormatPrice = (value: number) => `${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")} ₽`;
+export const onFormatPrice = (value: number | string) => `${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")} ₽`;
 
 
 export const onFormatDay = (day: number): string => {

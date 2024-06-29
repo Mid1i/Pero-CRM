@@ -15,9 +15,9 @@
 	const canvasRef = ref<HTMLCanvasElement | null>(null);
 
 
-	const isReady = computed<boolean>(() => props.data.every((item: IUsersAPI[] | undefined) => item));
+	const isReady = computed<boolean>(() => props.data.every((item: IUsersAPI[] | undefined) => !!item));
 
-	const getDataLengths = computed<(number | undefined)[]>(() => props.data.map(item => item?.length));
+	const getDataLengths = computed<number[]>(() => props.data.map(item => item?.length || 0));
 
 
 	watch(isReady, () => {

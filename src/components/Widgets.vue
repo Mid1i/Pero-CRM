@@ -9,15 +9,15 @@
 		orders: ISeparateData<IOrdersAPI>
 	}>();
 
-	const isLoading = <ComputedRef<boolean>>inject("isLoading");
+	const isLoading = inject("isLoading") as ComputedRef<boolean>;
 
 		
-	const onCountProducts = (array: IOrdersAPI[]): number => {
-		const products = array.reduce((result: ISizes[], item: IOrdersAPI): ISizes[] => [...result, ...item.order], []);
+	const onCountTotalProducts = (orders: IOrdersAPI[]): number => {
+		const products = orders.reduce((result: ISizes[], item: IOrdersAPI): ISizes[] => [...result, ...item.order], []);
 		return products.reduce((result: number, item: ISizes): number => result += item.count, 0);
 	}
 
-	const onCountRevenue = (array: IOrdersAPI[]): number => array.reduce((value: number, item: IOrdersAPI): number => value += item.price, 0);
+	const onCountTotalRevenue = (orders: IOrdersAPI[]): number => orders.reduce((value: number, item: IOrdersAPI): number => value += item.price, 0);
 </script>
 
 
@@ -34,15 +34,15 @@
 			title="Товаров продано"
 			iconURL="products.svg"
 			:loading="isLoading"
-			:current-amount="onCountProducts(props.orders.currentWeek)"
-			:previous-amount="onCountProducts(props.orders.previousWeek)"
+			:current-amount="onCountTotalProducts(props.orders.currentWeek)"
+			:previous-amount="onCountTotalProducts(props.orders.previousWeek)"
 		/>
 		<WidgetsItem
 			title="Общая выручка"
 			iconURL="revenue.svg"
 			:loading="isLoading"		
-			:current-amount="onCountRevenue(props.orders.currentWeek)"
-			:previous-amount="onCountRevenue(props.orders.previousWeek)"
+			:current-amount="onCountTotalRevenue(props.orders.currentWeek)"
+			:previous-amount="onCountTotalRevenue(props.orders.previousWeek)"
 		/>
 	</div>
 </template>

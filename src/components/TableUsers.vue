@@ -25,32 +25,32 @@
 
 
 <template>
-	<table class="table">
-		<thead class="table__head">
-			<th>
-				<td 
+	<div class="container">
+		<table class="table">
+			<thead class="table__head">
+				<th 
 					v-for="(header, index) in tableHeaders"
 					class="table__head-item"
 					:key="index"
 				>
 					{{ header }}
-				</td>
-			</th>
-		</thead>
-		<tbody class="table__body">
-			<tr v-for="user in users" :key="user.id">
-				<td class="table__body-item">{{ user.id }}</td>
-				<td class="table__body-item">{{ user.name }}</td>
-				<td class="table__body-item">{{ user.email }}</td>
-				<td class="table__body-item">{{ onFormatPhone(user.phone) }}</td>
-				<td class="table__body-item">{{ user.age }}</td>
-				<td class="table__body-item">{{ user.gender ? "Мужской" : "Женский" }}</td>
-				<td class="table__body-item">{{ onFormatUserDate(getFormattedDate(user.date_of_registration)) }}</td>
-				<td class="table__body-item">{{ user.orders.length }}</td>
-				<div class="table__body-item">{{ getStatus(user.status) }}</div>
-			</tr>
-		</tbody>
-	</table>
+				</th>
+			</thead>
+			<tbody class="table__body">
+				<tr v-for="user in users" :key="user.id">
+					<td class="table__body-item">{{ user.id }}</td>
+					<td class="table__body-item">{{ user.name }}</td>
+					<td class="table__body-item">{{ user.email }}</td>
+					<td class="table__body-item">{{ onFormatPhone(user.phone) }}</td>
+					<td class="table__body-item">{{ user.age }}</td>
+					<td class="table__body-item">{{ user.gender ? "Мужской" : "Женский" }}</td>
+					<td class="table__body-item">{{ onFormatUserDate(getFormattedDate(user.date_of_registration)) }}</td>
+					<td class="table__body-item">{{ user.orders.length }}</td>
+					<div class="table__body-item">{{ getStatus(user.status) }}</div>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </template>
 
 
@@ -59,12 +59,10 @@
 	@import "@/assets/styles/mixins.scss";
 
 
-	.table {
-		display: flex;
-		flex-direction: column;
+	.container {
 		overflow: overlay;
 		
-		max-height: 37vw;
+		max-height: 35vw;
 		width: 100%;
 
 		&::-webkit-scrollbar {
@@ -80,24 +78,23 @@
 				border-radius: 1.04vw;
 			}
 		}
+	}
+
+
+	.table {
+		border-collapse: collapse;
+		width: 100%;
 
 		&__head {
-			background: $--secondary-back;
+			background: $--tertiary-back;
+			border-radius: 0.52vw 0.52vw 0px 0px;
+
 			position: sticky;
 			left: 0px;
 			top: 0px;
 
 			& th {
-				background: $--tertiary-back;
-				border-radius: 0.52vw 0.52vw 0px 0px;
-
-				display: flex;
-				gap: 1.56vw;
-
 				padding: 0.52vw 2.08vw 0.52vw 1.04vw;
-
-				width: 100%;
-				z-index: 1;
 			}
 
 			&-item {
@@ -109,13 +106,6 @@
 		}
 
 		&__body tr {
-			display: flex;
-			gap: 1.56vw;
-
-			padding: 1.3vw 2.08vw 1.3vw 1.04vw;
-
-			width: 100%;
-
 			&:nth-child(even) {
 				background: $--quaternary-back;
 			}
@@ -127,49 +117,18 @@
 
 		&__body-item {
 			@include table-text;
+			color: $--secondary-text;
 			font-weight: 600;
-			overflow: hidden;
-			text-overflow: ellipsis;
+
+			padding: 1.3vw 2.08vw 1.3vw 1.04vw;
+			transition: all 0.1s ease-in-out;
 		}
+	}
 
-		&__head-item,
-		&__body-item {
-			&:nth-child(1) {
-				flex: 0 0 1.04vw;
-			}
 
-			&:nth-child(2) {
-				flex: 1 0 8vw;
-			}
-
-			&:nth-child(3) {
-				flex: 0 0 9.5vw;
-			}
-
-			&:nth-child(4) {
-				flex: 0 0 7.8vw;
-			}
-
-			&:nth-child(5) {
-				flex: 0 0 4.5vw;
-			}
-
-			&:nth-child(6) {
-				flex: 0 0 5.2vw;
-			}
-
-			&:nth-child(7) {
-				flex: 0 0 8.5vw;
-			}
-
-			&:nth-child(8) {
-				flex: 0 0 7vw;
-			}
-
-			&:nth-child(9) {
-				flex: 0 0 5vw;
-				text-align: right;
-			}
+	@media(hover: hover) {
+		.table__body tr:hover .table__body-item {
+			color: $--primary-text;
 		}
 	}
 </style>

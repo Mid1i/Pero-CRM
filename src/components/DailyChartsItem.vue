@@ -15,7 +15,7 @@
 
 	const canvasRef = ref<HTMLCanvasElement | null>(null);
 
-	const isLoading = <ComputedRef<boolean>>inject("isLoading");
+	const isLoading = inject("isLoading") as ComputedRef<boolean>;
 
 
 	onUpdated(() => useCharts(props.currentWeek, props.previousWeek, props.config, canvasRef, props.type));
@@ -33,7 +33,7 @@
 		</div>
 		<div :class="['chart__section', {loading: isLoading}]">
 			<canvas v-if="!isLoading && (currentWeek.length > 0 || previousWeek.length > 0)" ref="canvasRef"></canvas>
-			<h4 v-else-if="currentWeek.length === 0 || previousWeek.length === 0" class="chart__empty">Нет данных</h4>
+			<h4 v-else-if="!isLoading && (currentWeek.length === 0 || previousWeek.length === 0)" class="chart__empty">Нет данных</h4>
 		</div>
 	</div>
 </template>
